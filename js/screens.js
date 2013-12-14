@@ -119,7 +119,7 @@ game.screens.endGame = function(){
 	this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
 				i++;
-				if(i >= slides.length){
+				if(i >= this.slides.length){
 						diesel.raiseEvent("screenChange","endGame","menu")
 				}
 			}
