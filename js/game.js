@@ -6,7 +6,7 @@ var game ={
 	container:"game",
 	version:"v 1",
 	width: 800,
-	height: 600,
+	height: 800,
 	fontsize:16,
 	font:"16px sans-serif",	
 	up:0,
@@ -31,7 +31,7 @@ var game ={
 	},
 	settings:{
 		screen:"menu",
-		level:0,
+		level:"demo",
 		dataDirectory:"data",
 		
 	},

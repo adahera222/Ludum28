@@ -198,7 +198,7 @@ game.screens.level = function(){
 	this.units = [];
 	this.effects =[];
 	this.intel=0;
-	this.started =false;
+
 	this.startFrame =0;
 	
 	this.clickZones=[
@@ -210,46 +210,8 @@ game.screens.level = function(){
 		}}
 	];
 	
-	this.captureIntel=function(x,y,noswap){
-			x= diesel.clamp(x, 0, this.current.world[0].length -1);
-			y =diesel.clamp(y,0,this.current.world.length -1);
-			if(!noswap){
-				this.current.world[y][x] =0;
-			}
-			this.intel++;
-			if(this.intel < this.current.intel){
-				game.score+=500;
-			}
-			else{
-				game.score +=1000;
-			}
-			//TODO effect;	
-	}
-	this.hackMachine= function(x,y){	
-		var h = new game.objects.effects.text(x*this.grid,y *this.grid,game.up,"Hacked");
-		h.speed =10;
-		h.loop =true;
-		h.distanceCull =true;
-		this.effects.push(h);
-		
-		this.current.world[y][x]=0;
-		
-		x = diesel.clamp(x, 2, this.current.world[0].length -3);
-		y = diesel.clamp(y, 2, this.current.world.length -3);
-		x = x-2;
-		y = y-2;
-		
-			
-		for(var _y =y ; _y < y+5;_y++){
-			for(var _x =x ; _x <x +5;_x++){
-				if (this.current.world[_y][_x] == -5){
-					//console.log(_y,_x);
-					this.current.world[_y][_x] = -3;
-				}
-			}
-		}
 	
-	}
+
 
 	this.reset=function(){
 		this.current=false;
@@ -262,7 +224,7 @@ game.screens.level = function(){
 
 			
 		game.util.getLevel(game.settings.level);
-		//set eth cameraa tot he start
+		//set the cameraa to the start
 		for(var _y = 0; _y < this.current.world.length; _y++){
 			for(var _x = 0; _x < this.current.world[_y].length; _x++){
 				if(this.current.world[_y][_x] == -1){
@@ -307,10 +269,6 @@ game.screens.level = function(){
 			}
 		}
 		
-		//if the leve is post 9-11 give teh agent a gun
-		if(game.settings.level>=13){
-			game.objects.player.weapon = new game.objects.weapons.base();
-		}
 	}
 
 	this.draw=function(){
@@ -323,9 +281,7 @@ game.screens.level = function(){
 				+(diesel.frameCount % 60 ? ".":" "), 50,50)
 				return;
 		}
-		if(!this.started){
-			this.drawIntro(game.context.vfx);
-		}
+		
 		
 		//UPDATE OFFSETS for y
 		
@@ -343,31 +299,7 @@ game.screens.level = function(){
 		//translate all contexts
 		game.context.main.translate(this.offset.x, this.offset.y);
 		game.context.vfx.translate(this.offset.x, this.offset.y);
-		
 
-		
-	
-		
-		//draw the background 		
-		if(diesel.imageCache[this.current.background].width > game.width){
-			//calculate paralax
-			var paralax = 0, 
-			remaining = diesel.imageCache[this.current.background].width - game.width,
-			scroll = game.objects.player.x/ (this.current.world[0].length * this.grid);
-		
-			if(remaining >0 ){
-				paralax = remaining * scroll *-1;
-			}
-			game.context.back.drawImage(diesel.imageCache[this.current.background],
-				paralax,0,diesel.imageCache[this.current.background].width, 
-				diesel.imageCache[this.current.background].height);
-		}
-		else{
-			game.context.back.drawImage(diesel.imageCache[this.current.background],
-				0,0,game.width,game.height);
-		}
-		
-			
 		
 		//draw the world		
 		for(var _y = 0; _y < this.current.world.length; _y++){
@@ -383,7 +315,7 @@ game.screens.level = function(){
 							_x *this.grid, _y*this.grid ,this.grid,this.grid);
 				}
 				else{
-					var spr = diesel.spriteCache["ents.png"];
+					var spr = diesel.spriteCache["entities.png"];
 					var idx = Math.abs(this.current.world[_y][_x]);
 					var src = spr.getSprite(idx, Math.floor(diesel.frameCount/10)%spr.frames );
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
@@ -400,6 +332,7 @@ game.screens.level = function(){
 				this.units[i].draw(game.context.main);
 			}
 		}
+		
 		//Draw the effects
 		for(var i = 0; i < this.effects.length;i++){
 			if(this.isOnScreen(this.effects[i].x,this.effects[i].y)){
@@ -412,23 +345,12 @@ game.screens.level = function(){
 		game.context.vfx.restore();
 		
 		//GUI
-		game.context.vfx.fillText("intel:"+this.intel+"/"+this.current.intel,16,16);
-		game.context.vfx.fillText("mans:"+game.mans,16,32);
-		game.context.vfx.fillText("score:"+game.score,16,48);
-		if(game.settings.level > 13){
-			game.context.vfx.fillText("Info Awareness:"+ ((game.settings.level -13) * 5 + game.mans),16,64);
-		}
+		
 	
 	
 				
 	};
-	this.drawIntro =function(context){
-		context.fillStyle = "rgba(22,22,22,.5)";
-		context.fillRect( 64,64, game.width-128, game.height-128);
-		context.fillStyle = "#ffffff";
-		context.fillText("click to continue", 64, game.height-64);
-		this.drawMenu(context, this.current.intro, 64,64,game.width-128, game.height-128,16)
-	}
+
 	
 	this.update=function(ticks){
 		if(this.started){
@@ -462,10 +384,7 @@ game.screens.level = function(){
 		
 	
 	};
-	this.isOnScreen= function(x,y){
-		//TODO 
-		return true;
-	};
+
 	
 	this.getGridRef=function(x,y){
 		return [Math.floor(x/this.grid),Math.floor(y/this.grid) ]
