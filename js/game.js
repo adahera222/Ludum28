@@ -150,7 +150,9 @@ var game ={
 		]
 	},
 	preload:[
-		{"image":"logo.png"}
+		{"image":"logo.png"},	
+		{"sprite":"tiles.png","size":[32,32],"keys":{},"frames":1},
+		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4}
 	],
 	util:{
 		"getLevel":function(id){

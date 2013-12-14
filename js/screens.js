@@ -12,7 +12,6 @@ game.screens.menu = function(){
 			var button = Math.floor((diesel.mouseY - 32 )/ 32);
 			switch(button){
 				case 0:
-					game.settings.level =0;
 					diesel.raiseEvent("screenChange","menu","level");
 				break;
 				case 1:
@@ -57,7 +56,6 @@ game.screens.menu = function(){
 		this.clearAllContexts();
 		game.context.main.fillStyle="#ffffff";
 		game.context.vfx.fillStyle="#ffffff";
-		game.context.main.drawImage(diesel.imageCache["logo.png"], 160, 80,320,320);
 		game.context.main.fillText("MENU:",16,32);
 		this.drawMenu(game.context.main, this.options, 32,32, 128,128,32);
 		
@@ -97,7 +95,6 @@ game.screens.about = function(){
 		" Lee Brunjes"," Paul Caritj",   " Felicity Gong"," Jim Kliss"
 		];
 		this.clearAllContexts();
-			game.context.main.drawImage(diesel.imageCache["logo.png"], 160, 80,320,320);
 		game.context.main.fillText("About:",16,32);
 		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
 		
@@ -305,8 +302,7 @@ game.screens.level = function(){
 		for(var _y = 0; _y < this.current.world.length; _y++){
 			for(var _x = 0; _x < this.current.world[_y].length; _x++){
 				
-				if(this.current.world[_y][_x] >0 && 			
-					this.isOnScreen(_x*this.grid, _y*this.grid)){
+				if(this.current.world[_y][_x] >0){
 						var spr = diesel.spriteCache["tiles.png"];
 						var src = spr.getSpriteByIndex( this.current.world[_y][_x]*spr.frames);
 				
@@ -315,7 +311,7 @@ game.screens.level = function(){
 							_x *this.grid, _y*this.grid ,this.grid,this.grid);
 				}
 				else{
-					var spr = diesel.spriteCache["entities.png"];
+					var spr = diesel.spriteCache["ents.png"];
 					var idx = Math.abs(this.current.world[_y][_x]);
 					var src = spr.getSprite(idx, Math.floor(diesel.frameCount/10)%spr.frames );
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
