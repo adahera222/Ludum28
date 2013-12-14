@@ -44,7 +44,10 @@ canvas,video{
 
 #mobileControls{
 	margin:1em 0;
-
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 #mobileControls a{
 	display:inline-block;

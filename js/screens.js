@@ -35,11 +35,6 @@ game.screens.menu = function(){
 					}
 				break;
 				case 2:
-				
-				
-					diesel.raiseEvent("screenChange","menu","bindings");
-				break;
-				case 3:
 					diesel.raiseEvent("screenChange","menu","about");
 				break;
 				default:
@@ -54,7 +49,7 @@ game.screens.menu = function(){
 	this.options = [
 		"START",
 		"CONTINUE",
-		"KEY BINDINGS",
+		
 		"ABOUT",
 		
 	];
@@ -78,62 +73,7 @@ game.screens.menu = function(){
 game.screens.menu.prototype = game.screens.base;
 game.screens.menu = new game.screens.menu();
 
-/*
-BINDINGS
 
-*/
-
-game.screens.bindings = function(){
-
-	this.clickZones=[
-		{"x":32,"y":32,"w":128,"h":72, "click": function(evt){ 
-			game.screens.bindings.active =Math.floor((diesel.mouseY - 32)/16);
-			console.log(game.screens.bindings.active);
-		}},
-		{"x":32,"y":224,"w":128,"h":32, "click": function(evt){ 
-			diesel.raiseEvent("screenChange","bindings","menu");
-			diesel.save("__keys",game.keys);
-		}}
-
-	]
-	this.keys =["left","right","jump","use", "fire"]
-	this.named=[];
-	this.active = false;
-	this.active
-	this.draw=function(){
-		game.context.main.clearRect(0,0,game.width,game.height);
-		game.context.main.drawImage(diesel.imageCache["logo.png"], 160, 80,320,320);
-
-		for(var i =0; i < this.keys.length;i++){
-			this.named[i]= diesel.getKeyName(game.keys[this.keys[i]]);
-		}
-		game.context.main.fillText("Key Bindings:",16,32);
-		this.drawMenu(game.context.main, this.keys, 32,32,64,72,16);
-		this.drawMenu(game.context.main, this.named, 96,32,64,72,16);
-		
-		if(this.active !== false){
-			game.context.main.fillText("Press a Key for " + this.keys[this.active],
-				32,128);
-		}
-		
-		game.context.main.fillText("Back",32,256);
-		
-	};
-	this.update=function(ticks){
-	
-	};
-	
-	this.keyup=function(event){
-		if(this.active !== false){
-			game.keys[this.keys[this.active]] = event.keyCode;
-			this.active = false;
-		}
-	}
-
-};
-
-game.screens.bindings.prototype = game.screens.base;
-game.screens.bindings = new game.screens.bindings();
 
 /*
 About
@@ -150,7 +90,12 @@ game.screens.about = function(){
 
 	]
 	this.draw=function(){
-		var about = ["The basic idea:"," 1. get the intel, green "," 2. Make it to the exit, green"," 3. Avoid the bad guys, red","","","click to go back","","Uses:"," Code: Lee Brunjes"," font: Silkscreen by Jason Kottke"];
+		var about = [
+		"Text about teh game goes here",
+		
+		"TEAM:"
+		" Lee Brunjes"," Paul Caritj",   " Felicity Gong"," Jim Kliss"
+		];
 		this.clearAllContexts();
 			game.context.main.drawImage(diesel.imageCache["logo.png"], 160, 80,320,320);
 		game.context.main.fillText("About:",16,32);
@@ -181,15 +126,7 @@ game.screens.gameover = function(){
 
 	]
 	this.draw=function(){
-		var about = ["Game Over, man","","You failed.","America may never the the same.",
-		"Somewhere a bald eagle is perched on a  dying shrub in a" ,
-		"field  of dead grass with a single tear rolling slowly ",
-		"down its feathered cheek. It's your fault.","Be a better spy.",
-		"","","",
-		"","","",
-				"","","",
-		"","","Not those cheeks.","",
-		"Click for the main menu"];
+		var about = ["Game over Text"];
 		this.clearAllContexts();
 		game.context.main.drawImage(diesel.imageCache["logo.png"], 
 			(game.width-265)/2, 128,256,256);
@@ -218,24 +155,7 @@ game.screens.wongame = function(){
 
 	]
 	this.draw=function(){
-		var about = ["Thats it.","TOTAL INFORMATION AWARENESS","Can you feel it?", "We are unstoppable",
-		"We know all.","We know:",
-		" * Coke's Secret Recipe",
-		" * Who runs the Bermuda Triangle.",
-		" * Leaves the toilet seat up? (Steve from accounting)",
-		" * If Punk is dead (pretty much)",
-		" * If janey Likes Sven in 3rd period english (yes)",
-		" * Who wins Tiger vs Lion",
-		" * What you had for lunch",
-		" * Your sister's cousin's borther's middle name",
-		" * What you did last summer",
-		" * What Lost meant",
-		" * Who lives on Game of Thrones",
-		"",
-		"It's Glorious",
-		"We can use this to spread amber waves of freedom through",
-		"the rest of the world.",
-		"Take a break you've earned it."];
+		var about = [""];
 		this.clearAllContexts();
 		
 		game.context.main.fillText("We Won!!",16,32);
@@ -250,9 +170,24 @@ game.screens.wongame.prototype = game.screens.base;
 game.screens.wongame = new game.screens.wongame();
 
 
+/*
+Game INTRO
+*/
+game.screens.gameIntro = function(){
+	
+//TODO.
+/*
+Use the duke nukem intro as a basis.
+anyway to get amusing random data from somewhere?
+*/
+
+}
+game.screens.gameIntro.prototype = game.screens.base;
+game.screens.gameIntro= new game.screens.gameIntro();
+
 
 /*
-LEVEL 
+Level 
 
 Used to show the actual game screens you know.
 */
@@ -568,19 +503,4 @@ game.screens.level = function(){
 game.screens.level.prototype = game.screens.base;
 game.screens.level = new game.screens.level();
 
-
-/*
-Game INTRO
-*/
-game.screens.gameIntro = function(){
-	
-//TODO.
-/*
-Use the duke nukem intro as a basis.
-anyway to get amusing random data from somewhere?
-*/
-
-}
-game.screens.gameIntro.prototype = game.screens.base;
-game.screens.gameIntro= new game.screens.gameIntro();
 
