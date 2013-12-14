@@ -150,16 +150,21 @@ var game ={
 				
 			},
 			"home":function(player){
+					if(! confirm("Go Back?\n\nYou only get one chance at this level.")){
+						game.objects.player.y += game.screens.level.grid;
+						return;
+						
+					}
 					diesel.raiseEvent("levelChange",game.settings.level, "home", null);
 					
 					var done =true;
-					for(key in game.progress){
-						done = done && key;
+					for(var key in game.progress){
+						done = done && game.progress[key];
 					}
 					
 					if(done){
 						console.log("You have been everywhere man");
-						diesel.raiseEvent("changeScreen","level","endGame","levelChange");
+						diesel.raiseEvent("screenChange","level","endGame");
 					}
 									
 			}
