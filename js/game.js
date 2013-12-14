@@ -8,7 +8,7 @@ var game ={
 	width: 800,
 	height: 800,
 	fontsize:16,
-	font:"16px sans-serif",	
+	font:"16px daniel, sans-serif",	
 	up:0,
 	down: Math.PI,
 	left: Math.PI/2,
