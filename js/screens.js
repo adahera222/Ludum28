@@ -222,9 +222,9 @@ game.screens.level = function(){
 
 		game.util.getLevel(game.settings.level);
 		//set the cameraa to the start
-		for(var _y = 0; _y < this.current.world.length; _y++){
-			for(var _x = 0; _x < this.current.world[_y].length; _x++){
-				if(this.current.world[_y][_x] == -1){
+		for(var _y = 0; _y < this.current.entities.length; _y++){
+			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
+				if(this.current.entities[_y][_x] == 1){
 					this.offset.x = _x *this.grid ;
 					this.offset.y =  _y *this.grid;
 				}

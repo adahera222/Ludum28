@@ -31,7 +31,7 @@ var game ={
 	},
 	settings:{
 		screen:"menu",
-		level:"demo",
+		level:"home",
 		dataDirectory:"data",
 		
 	},
@@ -101,34 +101,9 @@ var game ={
 	},
 	assets:{
 		tiles:[],
-		entities:[null,//0
-		null,//start
-		function(player){ //end
-			if(game.screens.level.intel >= game.screens.level.current.intel){
-				diesel.raiseEvent("levelFinished",player);
-			}
-			else{
-			var e = new game.objects.effects.text(player.x, player.y, game.up, "You need more intel to exit");
-			e.color = "rgba(255,255,255,.75)";
-			e.speed =0;
-			e.maxFrames = 2;
-			e.framesPerFrame =1;
-			game.screens.level.effects.push(e);
-			}	
-		},
-		function(player){ //intel
-			var x = Math.floor(player.x/ game.screens.level.grid);
-			var y = Math.floor(player.y/ game.screens.level.grid);
-			game.screens.level.captureIntel(x,y);
-		},
-		function(player){//objects
-			if(game.keysDown.use){
-				var x = Math.floor(player.x/ game.screens.level.grid);
-				var y = Math.floor(player.y/ game.screens.level.grid);
-				game.screens.level.hackMachine(x,y);
-			}
+		entities:[null, //0?
+		null,//level start
 		
-		}
 		]
 	},
 	preload:[

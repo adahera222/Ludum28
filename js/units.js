@@ -9,8 +9,8 @@ Units for the game
 
 game.objects.player= function(){
 
-this.x = 0;
-this.y= 0;
+this.x = 64;
+this.y= 64;
 this.maxspeed = 2*game.screens.level.grid;
 this.speed = 0;
 this.w = game.screens.level.grid;
