@@ -374,17 +374,6 @@ game.screens.level = function(){
 					this.effects[i].update(ticks,i);
 				}
 			}
-			//do teh sweedish party level
-			if(game.settings.level === 8){
-				//every fram rate frames
-				var frame = diesel.frameCount - this.startFrame;
-				if(frame % (diesel.fpsLimit * 3) ==0 && frame >0 ){
-					var year = frame /(diesel.fpsLimit * 3);
-					if(year < 9){
-						game.objects.player.teleport(5 *this.grid, (15 * year + 9)*this.grid );
-					}
-				}
-			}
 		}
 
 

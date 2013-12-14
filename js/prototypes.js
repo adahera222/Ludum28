@@ -120,15 +120,16 @@ game.objects.base ={
 					game.screens.level.current.world[t][l],
 					game.screens.level.current.world[t][r]);
 */
-		//prevent the user from exiting the level.
-		if( x0 < 0 ||x0 >max[0] || y0 < 0 ||y > max[1]){
-		return false;
-		}
+	
 
 
 		x0 = this.clamp(Math.floor(x/game.screens.level.grid),0,max[0]),
 		y0 = this.clamp(Math.floor(y/game.screens.level.grid),0,max[1]);
 
+	//prevent the user from exiting the level.
+		if( x < 0 ||x >max[0]*game.screens.level.grid || y < 0 ||y > max[1]*game.screens.level.grid){
+		return false;
+		}
 
 		if(game.screens.level.current.world[y0][x0] <= 0){
 			//the center point is good;
