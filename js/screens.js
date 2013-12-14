@@ -93,7 +93,7 @@ game.screens.about = function(){
 		var about = [
 		"Text about teh game goes here",
 		
-		"TEAM:"
+		"TEAM:",
 		" Lee Brunjes"," Paul Caritj",   " Felicity Gong"," Jim Kliss"
 		];
 		this.clearAllContexts();
