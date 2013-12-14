@@ -42,7 +42,7 @@ var game ={
 	},
 	
 	hearts:5,
-	maxHearts:5
+	maxHearts:5,
 	
 	
 	context:{
@@ -101,7 +101,8 @@ var game ={
 		},
 		"collision":function(event){
 			console.log("collision",event);
-			game.hearts --;
+			game.objects.player.collideTimer = game.objects.player.collideImmuneTime;
+			game.hearts--;
 			if(game.hearts ==0){
 					diesel.raiseEvent("changeScreen","level","endGame","levelChange");				
 			}
@@ -167,7 +168,7 @@ var game ={
 		{"image":"logo.png"},	
 		{"sprite":"tiles.png","size":[32,32],"keys":{},"frames":1},
 		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4},
-		{"sprite":"hearts.png","size":[32,32],"keys":{"full":0,"empty":1},"frames":4},
+		{"sprite":"hearts.png","size":[64,64],"keys":{"full":0,"empty":1},"frames":4},
 		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4},
 		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"fan.png","size":[64,64],"keys":{"active":0,"used":1},"frames":4}

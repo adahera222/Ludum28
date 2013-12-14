@@ -19,7 +19,8 @@ this.sprite=null;
 this.item =null;
 this.facing = "down";
 this.r = game.down;
-
+this.collideTimer = 0;
+this.collideImmuneTime = 2000;
 this.update= function(ticks){
 
 	if(this.item){
@@ -64,11 +65,16 @@ this.update= function(ticks){
 	}
 	
 	//collision
-	for(var i =0; i < game.screens.level.units.length;i++){
-		var u = game.screens.level.units[i];
-		if(u.contains(this.x ,this.y)&& u.collides){
-			diesel.raiseEvent("collision", this, u);
+	if(this.collideTimer >0){
+		this.collideTimer -= Math.floor(ticks*1000);	
+	}
+	else{
+		for(var i =0; i < game.screens.level.units.length;i++){
+			var u = game.screens.level.units[i];
+			if(u.contains(this.x ,this.y)&& u.collides && this.collideTimer <=0){
+				diesel.raiseEvent("collision", this, u);
 			
+			}
 		}
 	}
 	

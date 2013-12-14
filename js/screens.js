@@ -394,7 +394,21 @@ game.screens.level = function(){
 		game.context.vfx.restore();
 
 		//GUI
-
+		for(var i=0; i < game.maxHearts;i++){
+			var _x = 32, _y=0,src ;
+			var spr = diesel.spriteCache["hearts.png"];
+					
+		
+							
+			if( i <= game.hearts){
+				src = spr.getSprite("full", (Math.floor(diesel.frameCount /10)+i)%spr.frames );
+			}
+			else{
+				src = spr.getSprite("empty", Math.floor(diesel.frameCount/10)%spr.frames );
+			}
+			game.context.vfx.drawImage(spr.image, src[0],src[1],src[2],src[3],
+						_x * i , _y ,32,32);
+		}
 
 
 
