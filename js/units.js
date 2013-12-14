@@ -19,7 +19,7 @@ this.sprite=null;
 this.item =null;
 this.facing = "down";
 this.r = game.down;
-this.collideTimer = 0;
+this.collideTimer = -10;
 this.collideImmuneTime = 2000;
 this.update= function(ticks){
 

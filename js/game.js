@@ -100,14 +100,15 @@ var game ={
 
 		},
 		"collision":function(event){
-			console.log("collision",event);
 			game.objects.player.collideTimer = game.objects.player.collideImmuneTime;
 			game.hearts--;
-			if(game.hearts ==0){
-					diesel.raiseEvent("changeScreen","level","endGame","levelChange");				
+			if(game.hearts <=0){
+					console.log("gg");
+					diesel.raiseEvent("screenChange","level","endGame",false);				
 			}
 			//TODO trigger sounds
-			
+				console.log("collision",event, game.hearts);
+		
 			
 		},
 		"levelChange":function(event){

@@ -125,11 +125,17 @@ game.screens.endGame = function(){
 	this.draw=function(){
 		var about = ["Game over Text"];
 		this.clearAllContexts();
-		game.context.main.drawImage(diesel.imageCache["logo.png"],
-			(game.width-265)/2, 128,256,256);
+
 		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
 
 		};
+		
+	this.reset = function(){
+		//TODO setup engame slides based on 
+		
+		//game.progress
+	
+	}
 
 
 };
@@ -251,7 +257,11 @@ game.screens.level = function(){
 		this.started =false;
 		this.startFrame = diesel.frameCount;
 
-
+		game.keysDown.up =false;
+		game.keysDown.down =false;
+		game.keysDown.left = false;
+		game.keysDown.right =false;
+		game.keysDown.use =false;
 
 		game.util.getLevel(game.settings.level);
 		//set the cameraa to the start
@@ -400,7 +410,7 @@ game.screens.level = function(){
 					
 		
 							
-			if( i <= game.hearts){
+			if( i < game.hearts){
 				src = spr.getSprite("full", (Math.floor(diesel.frameCount /10)+i)%spr.frames );
 			}
 			else{
