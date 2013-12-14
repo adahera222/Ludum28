@@ -118,20 +118,22 @@ var game ={
 		tiles:[],
 		entities:{
 			"forest":function(player){
-				console.log("going to demo");
-				//TODO this should be an event and be generic.
-
 				diesel.raiseEvent("levelChange",game.settings.level, "forest", null);
 				
 				
 			},
+			"mall":function(player){
+				diesel.raiseEvent("levelChange",game.settings.level, "mall", null);
+				
+				
+			},
+			"stadium":function(player){
+				diesel.raiseEvent("levelChange",game.settings.level, "stadium", null);
+				
+				
+			},
 			"home":function(player){
-				console.log("going to world");
-				//TODO this should be an event and be generic.
-
-				diesel.raiseEvent("levelChange",game.settings.level, "home", null);
-				
-				
+					diesel.raiseEvent("levelChange",game.settings.level, "home", null);
 			}
 		}
 	},
