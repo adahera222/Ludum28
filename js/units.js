@@ -87,9 +87,17 @@ this.sprite.animation = 0;
 this.draw =function(context){
 		context.save();
 			context.translate(this.x,this.y);
-			context.rotate(this.r)
-			context.translate(this.w/-2,this.h/-2);
-			this.sprite.draw(context,this.w,this.h);
+
+			if(this.facing == "right"){
+				context.translate(this.w/2,this.h/-2);
+				context.scale(-1,1);
+				this.sprite.draw(context,this.w,this.h);
+				context.scale(-1,1);
+			}
+			else{
+				context.translate(this.w/-2,this.h/-2);
+				this.sprite.draw(context,this.w,this.h);
+			}
 		context.restore();
 		
 		if(diesel.frameCount% 10 ==0){

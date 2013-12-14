@@ -353,25 +353,8 @@ game.objects.units.base = function(){
 			}else{
 				this.facing = "left";
 			}
-		}
-
+		}		
 		
-		//apply gravity if need
-		var tiletype= game.screens.level.getGridItem(this.x,this.y);
-		if(this.falls && this.canMove(ticks, game.down, game.gravity) && tiletype != -7){
-			this.y += game.gravity * ticks;
-			if(this.vspeed >0){
-			 this.vspeed -= ticks  * this.jumpheight/this.jumptime ;
-			 	if(this.vspeed < 0 ){
-					this.vspeed =0;
-				}
-			}
-			this.fell =true;			
-		}
-		else{
-			this.fell = false;
-			this.y = Math.floor(this.y)
-		}
 		
 		//shoot if needed.
 		if(this.weapon){

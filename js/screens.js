@@ -358,23 +358,23 @@ game.screens.level = function(){
 
 
 	this.update=function(ticks){
-		if(this.started){
-			//the player moves first
-			game.objects.player.update(ticks);
 
-			for(var i = 0; i < this.units.length;i++){
-				if(game.objects.player.manhattanDistance(this.units[i].x, this.units[i].y) < (game.width + game.height)){
-					this.units[i].update(ticks,i);
-				}
-			}
+		//the player moves first
+		game.objects.player.update(ticks);
 
-			for(var i = 0; i < this.effects.length;i++){
-				if(game.objects.player.manhattanDistance(this.effects[i].x, this.effects[i].y) < (game.width + game.height)){
-
-					this.effects[i].update(ticks,i);
-				}
+		for(var i = 0; i < this.units.length;i++){
+			if(game.objects.player.manhattanDistance(this.units[i].x, this.units[i].y) < (game.width + game.height)){
+				this.units[i].update(ticks,i);
 			}
 		}
+
+		for(var i = 0; i < this.effects.length;i++){
+			if(game.objects.player.manhattanDistance(this.effects[i].x, this.effects[i].y) < (game.width + game.height)){
+
+				this.effects[i].update(ticks,i);
+			}
+		}
+	
 
 
 	};
