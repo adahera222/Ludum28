@@ -18,6 +18,7 @@ this.h =game.screens.level.grid;
 this.sprite=null;
 this.item =null;
 this.facing = "down";
+this.r = game.down;
 
 this.update= function(ticks){
 
@@ -54,6 +55,8 @@ this.update= function(ticks){
 	if(this.speed >0 && this.canMove(ticks, game[this.facing], this.speed)){
 		this.move(ticks, game[this.facing], this.speed);
 	}
+	
+	this.r = game[this.facing];
 	
 	//using items
 	if(game.keysDown.use &&this.item && this.item.canFire(ticks)){

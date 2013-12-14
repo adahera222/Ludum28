@@ -117,11 +117,19 @@ var game ={
 	assets:{
 		tiles:[],
 		entities:{
-			2:function(player){
+			"forest":function(player){
 				console.log("going to demo");
 				//TODO this should be an event and be generic.
 
-				diesel.raiseEvent("levelChange",game.settings.level, "demo", null);
+				diesel.raiseEvent("levelChange",game.settings.level, "forest", null);
+				
+				
+			},
+			"home":function(player){
+				console.log("going to world");
+				//TODO this should be an event and be generic.
+
+				diesel.raiseEvent("levelChange",game.settings.level, "home", null);
 				
 				
 			}

@@ -352,12 +352,14 @@ game.screens.level = function(){
     for(var _y = 0; _y < this.current.entities.length; _y++){
 			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
 
-				if(this.current.entities[_y][_x] >=0){
+				var idx = this.current.entities[_y][_x];
+						if( typeof(idx) !== 'number'){					
+							idx = 2;
+						}
+				if(idx >=0){
 						var spr = diesel.spriteCache["ents.png"];
-						var idx = this.current.entities[_y][_x];
+					
 						var src = spr.getSprite( idx, Math.floor(diesel.frameCount/10)%spr.frames );
-
-
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
 							_x *this.grid, _y*this.grid ,this.grid,this.grid);
 				}
