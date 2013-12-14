@@ -396,14 +396,28 @@ game.objects.weapons.base =function(){
 		return this.sinceLastFired  > this.rateOfFire;
 	}
 	this.getMuzzle=function(shooter){
-		//TODO
-		if(shooter.facing == game.right){
-			return [shooter.x+this.x,shooter.y+this.y];
+
+		var value=[0,0];
+		switch(shooter.facing){
+			case "left":
+				value[0] = shooter.w/-2;
+				break;
+			
+			case "right": 
+				value[0] =shooter.w/2
+				break;
+			
+			case "up":
+				value[1] = shooter.h/-2;
+				break;
+				
+			case "down":
+			default:
+				value[1] = shooter.h/2;
+				break;
+		
 		}
-		else{
-			return [shooter.x-this.x,shooter.y+this.y];
-		}
-		return [0,0];
+		return value;
 	};
 	
 	this.fire= function(ticks, shooter){
