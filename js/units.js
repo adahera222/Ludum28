@@ -103,8 +103,8 @@ game.objects.player.prototype = new game.objects.units.base();
 game.objects.units.band = function(x,y){
 this.x  = x;
 this.y =y;
-this.w = game.screens.level.grid*2;
-this.h = game.screens.level.grid*2;
+this.w = game.screens.level.grid*1.5;
+this.h = game.screens.level.grid*1.5;
 this.sprite = new diesel.spriteInstance(diesel.spriteCache["band.png"]);
 this.sprite.animation = 0;
 
@@ -185,4 +185,77 @@ this.update= function(ticks, id){
 
 }
 game.objects.units.cheer.prototype = new game.objects.units.base();
+
+
+
+
+game.objects.units.grease = function(x,y){
+this.x  = x;
+this.y =y;
+this.w = game.screens.level.grid*1.5;
+this.h = game.screens.level.grid*1.5;
+this.sprite = new diesel.spriteInstance(diesel.spriteCache["grease.png"]);
+this.sprite.animation = 0;
+this.facing="down"
+
+this.draw =function(context){
+		context.save();
+			context.translate(this.x,this.y);
+
+			if(this.facing == "down"){
+				context.translate(this.w/-2,this.h/2);
+				context.scale(1,-1);
+				this.sprite.draw(context,this.w,this.h);
+				context.scale(1,-1);
+			}
+			else{
+				if(this.facing == "right"){
+					context.translate(this.w/2,this.h/-2);
+					context.scale(-1,1);
+					this.sprite.draw(context,this.w,this.h);
+					context.scale(-1,1);
+				}
+				else{
+					context.translate(this.w/-2,this.h/-2);
+					this.sprite.draw(context,this.w,this.h);
+				}
+			}
+		context.restore();
+		
+		if(diesel.frameCount% 10 ==0){
+			this.sprite.nextFrame();
+		}
+	}
+this.update= function(ticks, id){
+		if( id!= undefined){
+			this.id = id;
+		}
+		//move in a direction
+		if(this.canMove(ticks, game[this.facing], this.hspeed)){// &&) !(this.avoidEdges && this.willFall)){
+			this.move(ticks, game[this.facing], this.hspeed)
+		}
+		else{
+			var d = Math.floor(Math.random() *4);
+			switch(d){
+				case 0:
+					this.facing = "up";
+					break;
+				case 1:
+					this.facing = "right";
+					break;
+				case 2:
+					this.facing = "down";
+					break;
+				default:
+					this.facing = "left";
+					break;
+					
+			}
+			
+		}		
+
+	};
+
+}
+game.objects.units.grease.prototype = new game.objects.units.base();
 

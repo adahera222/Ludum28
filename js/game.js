@@ -178,6 +178,7 @@ var game ={
 		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4},
 		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"cheer.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
+		{"sprite":"grease.png","size":[64,64],"keys":{"used":0,"active":0},"frames":1},
 		{"sprite":"fan.png","size":[64,64],"keys":{"active":0,"used":1},"frames":4}
 		
 	],
