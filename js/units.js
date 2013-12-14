@@ -97,6 +97,9 @@ this.update= function(ticks){
 }
 game.objects.player.prototype = new game.objects.units.base();
 
+
+
+
 game.objects.units.band = function(x,y){
 this.x  = x;
 this.y =y;
@@ -129,4 +132,57 @@ this.draw =function(context){
 
 }
 game.objects.units.band.prototype = new game.objects.units.base();
+
+
+
+
+game.objects.units.cheer = function(x,y){
+this.x  = x;
+this.y =y;
+this.w = game.screens.level.grid*1.5;
+this.h = game.screens.level.grid*1.5;
+this.sprite = new diesel.spriteInstance(diesel.spriteCache["cheer.png"]);
+this.sprite.animation = 0;
+this.facing="down"
+
+this.draw =function(context){
+		context.save();
+			context.translate(this.x,this.y);
+
+			if(this.facing == "down"){
+				context.translate(this.w/-2,this.h/2);
+				context.scale(1,-1);
+				this.sprite.draw(context,this.w,this.h);
+				context.scale(1,-1);
+			}
+			else{
+				context.translate(this.w/-2,this.h/-2);
+				this.sprite.draw(context,this.w,this.h);
+			}
+		context.restore();
+		
+		if(diesel.frameCount% 10 ==0){
+			this.sprite.nextFrame();
+		}
+	}
+this.update= function(ticks, id){
+		if( id!= undefined){
+			this.id = id;
+		}
+		//move in a direction
+		if(this.canMove(ticks, game[this.facing], this.hspeed)){// &&) !(this.avoidEdges && this.willFall)){
+			this.move(ticks, game[this.facing], this.hspeed)
+		}
+		else{
+			if(this.facing == "down"){
+				this.facing = "up";
+			}else{
+				this.facing = "down";
+			}
+		}		
+
+	};
+
+}
+game.objects.units.cheer.prototype = new game.objects.units.base();
 
