@@ -36,6 +36,12 @@ this.update= function(ticks){
 		this.facing = "right";
 		this.speed=this.maxSpeed;
  	}
+ 	//move teh character
+	if(this.speed >0 && this.canMove(ticks, game[this.facing], this.speed)){
+		this.move(ticks, game[this.facing], this.speed);
+	}
+ 	
+ 	this.speed =0;
 	if(game.keysDown.up){
 		this.facing = "up";
 		this.speed=this.maxSpeed;
@@ -44,11 +50,10 @@ this.update= function(ticks){
 		this.facing = "down";		
 		this.speed=this.maxSpeed;
 	}
-	//move teh character
+	
 	if(this.speed >0 && this.canMove(ticks, game[this.facing], this.speed)){
 		this.move(ticks, game[this.facing], this.speed);
 	}
-	
 	
 	//using items
 	if(game.keysDown.use &&this.item && this.item.canFire(ticks)){
