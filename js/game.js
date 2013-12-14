@@ -94,6 +94,17 @@ var game ={
 			console.log("collision",event);
 			
 		},
+		"levelChange":function(event){
+			var from = event.args[0], to = event.args[1], transition = event.args[2] || "levelChange";
+			console.log("lvl",from, to, transition);
+			
+			game.screens.level.prev= from;
+			game.settings.level =to;
+			
+			diesel.raiseEvent("screenChange","level","level",transition);
+
+		
+		}
 		
 	},
 
@@ -107,7 +118,10 @@ var game ={
 		tiles:[],
 		entities:{
 			2:function(player){
-				console.log("going to shack");
+				console.log("going to demo");
+				//TODO this should be an event and be generic.
+
+				diesel.raiseEvent("levelChange",game.settings.level, "demo", null);
 				
 				
 			}

@@ -182,6 +182,38 @@ anyway to get amusing random data from somewhere?
 game.screens.gameIntro.prototype = game.screens.base;
 game.screens.gameIntro= new game.screens.gameIntro();
 
+/*
+Level change
+*/
+game.screens.levelChange = function(){
+
+this.reset = function(from, to){
+	this.to= to;
+	game.context.vfx.clearRect(0,0,800,800);
+	game.context.vfx.fillStyle="rgba(255,255,255, 0.5)";
+}
+
+this.o=0;
+this.grid =60;
+this.to;
+
+this.draw =function(){
+
+	game.context.vfx.fillRect(this.grid*i, 0,this.grid,game.height);
+}
+this.update= function(ticks){
+	i++;
+	if(i *this.grid >game.width){
+		diesel.raiseEvent("screenChange","level", this.to, null);
+	}
+}
+
+
+}
+game.screens.levelChange.prototype = game.screens.base;
+game.screens.levelChange= new game.screens.levelChange();
+
+
 
 /*
 Level
