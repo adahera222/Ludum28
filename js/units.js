@@ -68,6 +68,14 @@ this.update= function(ticks){
 			
 		}
 	}
+	
+	//world ents
+	var ent = game.screens.level.getGridEnt(this.x, this.y);
+	
+	if(ent && game.assets.entities[ent]){
+		console.log("calling",ent, this);
+		game.assets.entities[ent](this);
+	}
 
 }
 

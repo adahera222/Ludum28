@@ -89,7 +89,11 @@ var game ={
 				game.screens[game.settings.screen].keyup(event);
 			}
 
-		}
+		},
+		"collision":function(event){
+			console.log("collision",event);
+			
+		},
 		
 	},
 
@@ -101,10 +105,13 @@ var game ={
 	},
 	assets:{
 		tiles:[],
-		entities:[null, //0?
-		null,//level start
-		
-		]
+		entities:{
+			2:function(player){
+				console.log("going to shack");
+				
+				
+			}
+		}
 	},
 	preload:[
 		{"image":"logo.png"},	

@@ -195,6 +195,7 @@ game.screens.level = function(){
 	this.units = [];
 	this.effects =[];
 	this.intel=0;
+	this.prev = 1;
 
 	this.startFrame =0;
 
@@ -224,7 +225,7 @@ game.screens.level = function(){
 		//set the cameraa to the start
 		for(var _y = 0; _y < this.current.entities.length; _y++){
 			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
-				if(this.current.entities[_y][_x] == 1){
+				if(this.current.entities[_y][_x] == this.prev){
 					this.offset.x = _x *this.grid ;
 					this.offset.y =  _y *this.grid;
 				}
@@ -305,7 +306,8 @@ game.screens.level = function(){
 
 				if(this.current.tiles[_y][_x] >=0){
 						var spr = diesel.spriteCache["tiles.png"];
-						var src = spr.getSpriteByIndex( this.current.tiles[_y][_x]*spr.frames);
+						var idx = this.current.tiles[_y][_x];
+						var src = spr.getSprite( idx, Math.floor(diesel.frameCount/10)%spr.frames );
 
 
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
@@ -320,7 +322,8 @@ game.screens.level = function(){
 
 				if(this.current.entities[_y][_x] >=0){
 						var spr = diesel.spriteCache["ents.png"];
-						var src = spr.getSpriteByIndex( this.current.entities[_y][_x]*spr.frames);
+						var idx = this.current.entities[_y][_x];
+						var src = spr.getSprite( idx, Math.floor(diesel.frameCount/10)%spr.frames );
 
 
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
@@ -390,6 +393,14 @@ game.screens.level = function(){
 		x = Math.max(Math.min(x,this.current.world[0].length-1),0);
 
 		return this.current.world[y][x];
+	};
+	this.getGridEnt=function(x,y){
+		y = Math.floor(y/this.grid);
+		x = Math.floor(x/this.grid);
+		y = Math.max(Math.min(y,this.current.entities.length -1),0);
+		x = Math.max(Math.min(x,this.current.entities[0].length-1),0);
+
+		return this.current.entities[y][x];
 	};
 
 	this.keydown = function(event){
