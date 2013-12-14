@@ -8,18 +8,18 @@ var game ={
 	width: 800,
 	height: 800,
 	fontsize:16,
-	font:"16px sans-serif",	
+	font:"16px daniel, sans-serif",	
 	up:0,
 	down: Math.PI,
 	left: Math.PI/2,
 	right: Math.PI/2*3,
 	score: 0,
 	keys:{
-		"left":65, 
-		"right":68,
-		"up":32,
-		"down":66,
-		"use":69
+		"left":37, 
+		"right":39,
+		"up":38,
+		"down":40,
+		"use":32
 		
 	},
 	keysDown:{
@@ -42,27 +42,9 @@ var game ={
 		vfx:false
 	},
 	setup:function(){
-		//load keys if saved.
-		var keys= diesel.load("__keys");
-		if(keys){
-		
-			game.keys = keys;
-		}
-		else{
-			console.log("no key saved using defaults");
-		}
-		
+		document.getElementById(game.container).focus();
 		game.objects.player = new game.objects.player();
-		
-		var links = document.getElementById("mobileControls").children;
-		for(var i=0; i < links.length;i++){
-			links[i].onmousedown = game.util.mobileButtonDown;
-			links[i].onmouseup = game.util.mobileButtonUp;
-			links[i].addEventListener("ontouchstart", game.util.mobileButtonDown,false);
-			links[i].addEventListener("ontouchmove", game.util.mobileButtonUp,false);
-			links[i].addEventListener("ontouchend", game.util.mobileButtonUp,false);
-			links[i].onclick = game.util.ignore;
-		}
+			
 	},
 	events:{
 		"click":function(evt){
