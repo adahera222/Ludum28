@@ -114,10 +114,14 @@ Gameover
 */
 
 game.screens.endGame = function(){
-
+	this.slides =[];
+	this.i =0;
 	this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
-			diesel.raiseEvent("screenChange","about","menu")
+				i++;
+				if(i >= slides.length){
+						diesel.raiseEvent("screenChange","endGame","menu")
+				}
 			}
 		}
 
@@ -127,13 +131,23 @@ game.screens.endGame = function(){
 		this.clearAllContexts();
 
 		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
+		
+		if(i < this.slides.length){
+			//TODO DRAW SLIDE
+		}
 
 		};
 		
 	this.reset = function(){
-		//TODO setup engame slides based on 
+		for(key in game.progress){
+			
+			//TODO setup engame slides based on 
+			var slide = {"key": key};
+			
 		
-		//game.progress
+			this.slides.push(slide);
+		
+		}
 	
 	}
 
