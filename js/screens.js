@@ -255,6 +255,7 @@ game.screens.level = function(){
 
 		game.util.getLevel(game.settings.level);
 		//set the cameraa to the start
+		console.log(this.prev);
 		for(var _y = 0; _y < this.current.entities.length; _y++){
 			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
 				if(this.current.entities[_y][_x] == this.prev){
@@ -264,7 +265,8 @@ game.screens.level = function(){
 			}
 		}
 		//move teh player to the start location.
-		game.objects.player.teleport(	this.offset.x +this.grid/2,	this.offset.y+this.grid/2);
+		console.log(this.offset);
+		game.objects.player.teleport(	this.offset.x +this.grid/2,	this.offset.y+this.grid/2*3);
 
 		//creat the units from the level and store them
 		for(var i = 0; i < this.current.units.length;i++){
