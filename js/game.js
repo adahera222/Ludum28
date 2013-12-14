@@ -109,7 +109,9 @@ var game ={
 	preload:[
 		{"image":"logo.png"},	
 		{"sprite":"tiles.png","size":[32,32],"keys":{},"frames":1},
-		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4}
+		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4},
+		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4}
+		
 	],
 	util:{
 		"getLevel":function(id){
