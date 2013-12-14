@@ -20,9 +20,9 @@ game.screens.menu = function(){
 						game.settings.screen = "level";
 						return;
 					}
-					
+
 					var loaded = diesel.load("__current");
-					
+
 					if(loaded && loaded.level <= game.settings.lastLevel){
 						game.mans = loaded.mans;
 						game.settings.level = loaded.level;
@@ -40,17 +40,17 @@ game.screens.menu = function(){
 					console.log("aaah",button);
 				break;
 			}
-			
-			
+
+
 		}},
-	
+
 	]
 	this.options = [
 		"START",
 		"CONTINUE",
-		
+
 		"ABOUT",
-		
+
 	];
 	this.draw=function(){
 		this.clearAllContexts();
@@ -58,13 +58,13 @@ game.screens.menu = function(){
 		game.context.vfx.fillStyle="#ffffff";
 		game.context.main.fillText("MENU:",16,32);
 		this.drawMenu(game.context.main, this.options, 32,32, 128,128,32);
-		
-		this.fillTextCenteredX(game.context.vfx,game.version,game.width/2,420);		
-		
+
+		this.fillTextCenteredX(game.context.vfx,game.version,game.width/2,420);
+
 	};
 ;
 
-	
+
 
 };
 
@@ -90,19 +90,19 @@ game.screens.about = function(){
 	this.draw=function(){
 		var about = [
 		"Text about teh game goes here",
-		
+
 		"TEAM:",
 		" Lee Brunjes"," Paul Caritj",   " Felicity Gong"," Jim Kliss"
 		];
 		this.clearAllContexts();
 		game.context.main.fillText("About:",16,32);
 		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
-		
-		this.fillTextCenteredX(game.context.main,game.version,game.width/2,420);		
+
+		this.fillTextCenteredX(game.context.main,game.version,game.width/2,420);
 		game.context.back.fillStyle="rgba(255,255,255,.125)";
 	};
-	
-	
+
+
 };
 
 game.screens.about.prototype = game.screens.base;
@@ -125,13 +125,13 @@ game.screens.gameover = function(){
 	this.draw=function(){
 		var about = ["Game over Text"];
 		this.clearAllContexts();
-		game.context.main.drawImage(diesel.imageCache["logo.png"], 
+		game.context.main.drawImage(diesel.imageCache["logo.png"],
 			(game.width-265)/2, 128,256,256);
 		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
-		
+
 		};
-	
-	
+
+
 };
 
 game.screens.gameover.prototype = game.screens.base;
@@ -154,13 +154,13 @@ game.screens.wongame = function(){
 	this.draw=function(){
 		var about = [""];
 		this.clearAllContexts();
-		
+
 		game.context.main.fillText("We Won!!",16,32);
 		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
-		
+
 		};
-	
-	
+
+
 };
 
 game.screens.wongame.prototype = game.screens.base;
@@ -171,7 +171,7 @@ game.screens.wongame = new game.screens.wongame();
 Game INTRO
 */
 game.screens.gameIntro = function(){
-	
+
 //TODO.
 /*
 Use the duke nukem intro as a basis.
@@ -184,7 +184,7 @@ game.screens.gameIntro= new game.screens.gameIntro();
 
 
 /*
-Level 
+Level
 
 Used to show the actual game screens you know.
 */
@@ -197,17 +197,17 @@ game.screens.level = function(){
 	this.intel=0;
 
 	this.startFrame =0;
-	
+
 	this.clickZones=[
 		{x:32,y:32,w:game.width-64,h:game.height-64,click:function(){
 			if(!game.screens.level.started){
 				game.screens.level.started =true;
-				
+
 			}
 		}}
 	];
-	
-	
+
+
 
 
 	this.reset=function(){
@@ -217,9 +217,9 @@ game.screens.level = function(){
 		this.intel =0;
 		this.started =false;
 		this.startFrame = diesel.frameCount;
-		
 
-			
+
+
 		game.util.getLevel(game.settings.level);
 		//set the cameraa to the start
 		for(var _y = 0; _y < this.current.world.length; _y++){
@@ -232,7 +232,7 @@ game.screens.level = function(){
 		}
 		//move teh player to the start location.
 		game.objects.player.teleport(	this.offset.x +this.grid/2,	this.offset.y+this.grid/2);
-		
+
 		//creat the units from the level and store them
 		for(var i = 0; i < this.current.units.length;i++){
 			var u = this.current.units[i];
@@ -244,7 +244,7 @@ game.screens.level = function(){
 				console.log("cannot add moster of type",u[0]);
 			}
 		}
-		
+
 		//create effects from teh level
 		for(var i = 0; i < this.current.effects.length;i++){
 			var e = this.current.effects[i];
@@ -265,7 +265,7 @@ game.screens.level = function(){
 				console.log("cannot add effect of type",e[0]);
 			}
 		}
-		
+
 	}
 
 	this.draw=function(){
@@ -278,42 +278,51 @@ game.screens.level = function(){
 				+(diesel.frameCount % 60 ? ".":" "), 50,50)
 				return;
 		}
-		
-		
+
+
 		//UPDATE OFFSETS for y
-		
+
 		this.offset.x = diesel.clamp(game.width/2 - game.objects.player.x,
 			-1* (this.current.world[0].length*this.grid) + game.width,
 			-1);
 		this.offset.y = diesel.clamp(game.height/2 - game.objects.player.y,
 			-1 *(this.current.world.length*this.grid) + game.height,	-1);
-		
-		
+
+
 		game.context.main.save();
 		game.context.vfx.save();
-		
-		
+
+
 		//translate all contexts
 		game.context.main.translate(this.offset.x, this.offset.y);
 		game.context.vfx.translate(this.offset.x, this.offset.y);
 
-		
-		//draw the world		
-		for(var _y = 0; _y < this.current.world.length; _y++){
-			for(var _x = 0; _x < this.current.world[_y].length; _x++){
-				
-				if(this.current.world[_y][_x] >0){
+
+		//draw the world
+    // tiles...
+		for(var _y = 0; _y < this.current.tiles.length; _y++){
+			for(var _x = 0; _x < this.current.tiles[_y].length; _x++){
+
+				if(this.current.tiles[_y][_x] >=0){
 						var spr = diesel.spriteCache["tiles.png"];
-						var src = spr.getSpriteByIndex( this.current.world[_y][_x]*spr.frames);
-				
-				
+						var src = spr.getSpriteByIndex( this.current.tiles[_y][_x]*spr.frames);
+
+
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
 							_x *this.grid, _y*this.grid ,this.grid,this.grid);
 				}
-				else{
-					var spr = diesel.spriteCache["ents.png"];
-					var idx = Math.abs(this.current.world[_y][_x]);
-					var src = spr.getSprite(idx, Math.floor(diesel.frameCount/10)%spr.frames );
+			}
+		}
+
+    // entities...
+    for(var _y = 0; _y < this.current.entities.length; _y++){
+			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
+
+				if(this.current.entities[_y][_x] >=0){
+						var spr = diesel.spriteCache["ents.png"];
+						var src = spr.getSpriteByIndex( this.current.entities[_y][_x]*spr.frames);
+
+
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
 							_x *this.grid, _y*this.grid ,this.grid,this.grid);
 				}
@@ -321,47 +330,47 @@ game.screens.level = function(){
 		}
 		//draw the player
 		game.objects.player.draw(game.context.main);
-		
+
 		//Draw the units
 		for(var i = 0; i < this.units.length;i++){
 			if(this.isOnScreen(this.units[i].x,this.units[i].y)){
 				this.units[i].draw(game.context.main);
 			}
 		}
-		
+
 		//Draw the effects
 		for(var i = 0; i < this.effects.length;i++){
 			if(this.isOnScreen(this.effects[i].x,this.effects[i].y)){
 				this.effects[i].draw(game.context.main);
 			}
 		}
-		
-		
+
+
 		game.context.main.restore();
 		game.context.vfx.restore();
-		
+
 		//GUI
-		
-	
-	
-				
+
+
+
+
 	};
 
-	
+
 	this.update=function(ticks){
 		if(this.started){
 			//the player moves first
 			game.objects.player.update(ticks);
-			
+
 			for(var i = 0; i < this.units.length;i++){
 				if(game.objects.player.manhattanDistance(this.units[i].x, this.units[i].y) < (game.width + game.height)){
 					this.units[i].update(ticks,i);
 				}
 			}
-			
+
 			for(var i = 0; i < this.effects.length;i++){
 				if(game.objects.player.manhattanDistance(this.effects[i].x, this.effects[i].y) < (game.width + game.height)){
-			
+
 					this.effects[i].update(ticks,i);
 				}
 			}
@@ -377,11 +386,11 @@ game.screens.level = function(){
 				}
 			}
 		}
-		
-	
+
+
 	};
 
-	
+
 	this.getGridRef=function(x,y){
 		return [Math.floor(x/this.grid),Math.floor(y/this.grid) ]
 	};
@@ -390,10 +399,10 @@ game.screens.level = function(){
 		x = Math.floor(x/this.grid);
 		y = Math.max(Math.min(y,this.current.world.length -1),0);
 		x = Math.max(Math.min(x,this.current.world[0].length-1),0);
-	
+
 		return this.current.world[y][x];
 	};
-	
+
 	this.keydown = function(event){
 		for(keyname in game.keys){
 					if(event.keyCode == game.keys[keyname]){
@@ -407,7 +416,7 @@ game.screens.level = function(){
 				game.keysDown[keyname] =false;
 			}
 		}
-		
+
 		if(event.keyCode ===27){
 			game.settings.screen = "menu";
 			game.settings.inGame = true;
@@ -419,3 +428,4 @@ game.screens.level.prototype = game.screens.base;
 game.screens.level = new game.screens.level();
 
 
+
