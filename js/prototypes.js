@@ -139,22 +139,9 @@ game.objects.base ={
 					game.screens.level.current.world[t][l]  <=0&&
 					game.screens.level.current.world[t][r]  <=0;
 					
-			if(this.avoidEdges){
-				var edge = l;
-				if(this.facing == "right"){
-					edge= r;
-				}
-				b =  this.clamp(Math.floor((y +this.h ) /game.screens.level.grid),0,max[1])
-				this.willFall = game.screens.level.current.world[b][r]  <=0;
-				
-			}
-			else{
-				this.willFall=false;
-			}
 		
 		}
 		else{
-			//console.log(this.type,"is stuck at ",x,y, x0,y0, ticks, angle, force);
 			empty = false;
 		}
 		
@@ -357,7 +344,7 @@ game.objects.units.base = function(){
 			this.id = id;
 		}
 		//move in a direction
-		if(this.hspeed !=0 && this.canMove(ticks, game[this.facing], this.hspeed)){// &&) !(this.avoidEdges && this.willFall)){
+		if(this.canMove(ticks, game[this.facing], this.hspeed)){// &&) !(this.avoidEdges && this.willFall)){
 			this.move(ticks, game[this.facing], this.hspeed)
 		}
 		else{

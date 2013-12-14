@@ -75,3 +75,28 @@ this.update= function(ticks){
 }
 game.objects.player.prototype = new game.objects.units.base();
 
+game.objects.units.band = function(x,y){
+this.x  = x;
+this.y =y;
+this.w = game.screens.level.grid;
+this.h = game.screens.level.grid;
+this.sprite = new diesel.spriteInstance(diesel.spriteCache["band.png"]);
+this.sprite.animation = 0;
+
+
+this.draw =function(context){
+		context.save();
+			context.translate(this.x,this.y);
+			context.rotate(this.r)
+			context.translate(this.w/-2,this.h/-2);
+			this.sprite.draw(context,this.w,this.h);
+		context.restore();
+		
+		if(diesel.frameCount% 10 ==0){
+			this.sprite.nextFrame();
+		}
+	}
+
+}
+game.objects.units.band.prototype = new game.objects.units.base();
+

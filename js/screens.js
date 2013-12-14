@@ -333,9 +333,9 @@ game.screens.level = function(){
 
 		//Draw the units
 		for(var i = 0; i < this.units.length;i++){
-			if(this.isOnScreen(this.units[i].x,this.units[i].y)){
+			
 				this.units[i].draw(game.context.main);
-			}
+			
 		}
 
 		//Draw the effects

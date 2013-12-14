@@ -110,7 +110,9 @@ var game ={
 		{"image":"logo.png"},	
 		{"sprite":"tiles.png","size":[32,32],"keys":{},"frames":1},
 		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4},
-		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4}
+		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4},
+		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
+		{"sprite":"fan.png","size":[64,64],"keys":{"active":0,"used":1},"frames":4}
 		
 	],
 	util:{

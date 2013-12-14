@@ -543,10 +543,17 @@ var diesel={
 		this.frameCount= sprite.frames;
 		this.animation="";
 		this.sprite = sprite;
-		this.draw = function(context){
+		this.draw = function(context, w,h){
+		
+		if (!w ){
+			w =this.sprite.w;
+		}
+		if(!h){
+		 h =this.sprite.h;
+		}
 			var src = this.sprite.getSprite(this.animation, this.frame);
 				context.drawImage(this.sprite.image, src[0],src[1],src[2],src[3],
-							0,0,this.sprite.w, this.sprite.h);
+							0,0,w,h );
 		};
 		this.nextFrame =function(){
 		 this.frame = (this.frame + 1) % this.frameCount;
