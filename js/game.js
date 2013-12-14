@@ -35,6 +35,15 @@ var game ={
 		dataDirectory:"data",
 		
 	},
+	progress:{
+		"mall":false,
+		"forest":false,
+		"stadium":false
+	},
+	
+	hearts:5,
+	maxHearts:5
+	
 	
 	context:{
 		back:false,
@@ -92,6 +101,12 @@ var game ={
 		},
 		"collision":function(event){
 			console.log("collision",event);
+			game.hearts --;
+			if(game.hearts ==0){
+					diesel.raiseEvent("changeScreen","level","endGame","levelChange");				
+			}
+			//TODO trigger sounds
+			
 			
 		},
 		"levelChange":function(event){
@@ -119,21 +134,32 @@ var game ={
 		entities:{
 			"forest":function(player){
 				diesel.raiseEvent("levelChange",game.settings.level, "forest", null);
-				
+				game.progress.forest =true;
 				
 			},
 			"mall":function(player){
 				diesel.raiseEvent("levelChange",game.settings.level, "mall", null);
-				
+				game.progress.mall =true;
 				
 			},
 			"stadium":function(player){
 				diesel.raiseEvent("levelChange",game.settings.level, "stadium", null);
-				
+				game.progress.stadium =true;
 				
 			},
 			"home":function(player){
 					diesel.raiseEvent("levelChange",game.settings.level, "home", null);
+					
+					var done =true;
+					for(key in game.progress){
+						done = done && key;
+					}
+					
+					if(done){
+						console.log("You have been everywhere man");
+						diesel.raiseEvent("changeScreen","level","endGame","levelChange");
+					}
+									
 			}
 		}
 	},
@@ -141,6 +167,7 @@ var game ={
 		{"image":"logo.png"},	
 		{"sprite":"tiles.png","size":[32,32],"keys":{},"frames":1},
 		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4},
+		{"sprite":"hearts.png","size":[32,32],"keys":{"full":0,"empty":1},"frames":4},
 		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4},
 		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"fan.png","size":[64,64],"keys":{"active":0,"used":1},"frames":4}

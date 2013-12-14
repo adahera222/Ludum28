@@ -76,8 +76,13 @@ this.update= function(ticks){
 	var ent = game.screens.level.getGridEnt(this.x, this.y);
 	
 	if(ent && game.assets.entities[ent]){
-		console.log("calling",ent, this);
-		game.assets.entities[ent](this);
+		if(!game.progress[ent]){
+			console.log("calling",ent, this);
+			game.assets.entities[ent](this);
+		}
+		else{
+			console.log("you have already been to "+ent);
+		}
 	}
 
 }
@@ -89,8 +94,8 @@ game.objects.player.prototype = new game.objects.units.base();
 game.objects.units.band = function(x,y){
 this.x  = x;
 this.y =y;
-this.w = game.screens.level.grid;
-this.h = game.screens.level.grid;
+this.w = game.screens.level.grid*2;
+this.h = game.screens.level.grid*2;
 this.sprite = new diesel.spriteInstance(diesel.spriteCache["band.png"]);
 this.sprite.animation = 0;
 

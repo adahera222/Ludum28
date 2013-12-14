@@ -113,7 +113,7 @@ Gameover
 
 */
 
-game.screens.gameover = function(){
+game.screens.endGame = function(){
 
 	this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
@@ -134,8 +134,8 @@ game.screens.gameover = function(){
 
 };
 
-game.screens.gameover.prototype = game.screens.base;
-game.screens.gameover = new game.screens.gameover();
+game.screens.endGame.prototype = game.screens.base;
+game.screens.endGame = new game.screens.endGame();
 
 /*
 wongame
@@ -355,8 +355,13 @@ game.screens.level = function(){
 			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
 
 				var idx = this.current.entities[_y][_x];
-						if( typeof(idx) !== 'number'){					
-							idx = 2;
+						if( typeof(idx) !== 'number'){
+							if(!game.progress[idx]){		
+								idx = 2;
+							}
+							else{
+								idx = 3;
+							}
 						}
 				if(idx >=0){
 						var spr = diesel.spriteCache["ents.png"];
