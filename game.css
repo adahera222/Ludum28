@@ -37,7 +37,7 @@ header,footer{
 canvas,video{
 	background:transparent;
 	position:absolute;
-	border:1px solid #999;
+	border:1px solid #343;
 		 
 	user-select: none;
 	-moz-user-select: none;
@@ -46,12 +46,16 @@ canvas,video{
 }
 
 #container{
-	width:800px;
+	
+	width:790px;
+	height:1586px;
+	background: url('data/sheet.jpg') top left no-repeat;
+	padding:231px 210px;
 	margin:1ex auto;
 }
 
 #game{
-
+	width:800px;
 	height:800px;
 }
 

@@ -388,6 +388,7 @@ game.objects.units.prep.prototype = new game.objects.units.base();
 game.objects.weapons.banana=function(){
 this.type="banana";
 this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.sprite.animation ="closed";
 this.y= 16;
 this.x = 16;
 

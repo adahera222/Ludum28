@@ -364,8 +364,9 @@ var diesel={
 		mousemove:function(evt){		
 
 			var rect = diesel.container.getBoundingClientRect()
-			diesel.mouseX = evt.pageX - rect.left - diesel.container.scrollLeft;
-			diesel.mouseY = evt.pageY - rect.top -diesel.container.scrollTop;
+			diesel.mouseX = evt.pageX - rect.left - diesel.container.scrollLeft - window.pageXOffset;
+
+			diesel.mouseY = evt.pageY - rect.top - diesel.container.scrollTop -window.pageYOffset;
 			
 			
     
@@ -623,7 +624,6 @@ var diesel={
 	"clamp":function(x, small, big){
 		return Math.max(Math.min(x,big),small);
 	}
-	
 
 
 }

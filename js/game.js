@@ -140,27 +140,29 @@ var game ={
 	assets:{
 		tiles:[],
 		entities:{
+			"cafe":function(player){
+				diesel.raiseEvent("levelChange",game.settings.level, "forest", null);
+				
+			},		
 			"forest":function(player){
 				diesel.raiseEvent("levelChange",game.settings.level, "forest", null);
-				game.progress.forest =true;
 				
 			},
 			"mall":function(player){
 				diesel.raiseEvent("levelChange",game.settings.level, "mall", null);
-				game.progress.mall =true;
 				
 			},
 			"stadium":function(player){
 				diesel.raiseEvent("levelChange",game.settings.level, "stadium", null);
-				game.progress.stadium =true;
+			
 				
 			},
 			"home":function(player){
-					if(! confirm("Go Back?\n\nYou only get one chance at this level.")){
+				/*	if(! confirm("Go Back?\n\nYou only get one chance at this level.")){
 						game.objects.player.y += game.screens.level.grid;
 						return;
 						
-					}
+					}*/
 					diesel.raiseEvent("levelChange",game.settings.level, "home", null);
 					
 					var done =true;
@@ -193,6 +195,7 @@ var game ={
 				
 				if(nearby <= aloneenough){
 				 game.score += score;
+				 game.progress[game.settings.level] +=score;
 				 //TODO Text effect
 				}
 				

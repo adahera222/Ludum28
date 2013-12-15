@@ -8,54 +8,24 @@
 
 game.screens.menu = function(){
 	this.clickZones = [
-		{x:32,y:32,w:128,h:128,"click":function(){
-			var button = Math.floor((diesel.mouseY - 32 )/ 32);
-			switch(button){
-				case 0:
-					diesel.raiseEvent("screenChange","menu","level","gameIntro");
-				break;
-				case 1:
-					//TODO load __current
-					if(game.settings.inGame){
-						game.settings.screen = "level";
-						return;
-					}
-
-					var loaded = diesel.load("__current");
-
-					if(loaded && loaded.level <= game.settings.lastLevel){
-						game.mans = loaded.mans;
-						game.settings.level = loaded.level;
-						game.score = loaded.score;
-						diesel.raiseEvent("screenChange","menu","level");
-					}
-					else{
-						alert("cannot Continue");
-					}
-				break;
-				case 2:
-					diesel.raiseEvent("screenChange","menu","about");
-				break;
-				default:
-					console.log("aaah",button);
-				break;
-			}
-
+		{x:0,y:0,w:800,h:800,"click":function(){
+				diesel.raiseEvent("screenChange","menu","level","gameIntro");
+				
 
 		}},
 
 	]
 	this.options = [
-		"START",
-		"CONTINUE",
-
-		"ABOUT",
+		"click to start",
+		
+		"","",
+		"this game requires a keyboard. sorry"
 
 	];
 	this.draw=function(){
 		this.clearAllContexts();
-		game.context.main.fillStyle="#ffffff";
-		game.context.vfx.fillStyle="#ffffff";
+		game.context.main.fillStyle="#333333";
+		game.context.vfx.fillStyle="#333333";
 		game.context.main.fillText("MENU:",16,32);
 		this.drawMenu(game.context.main, this.options, 32,32, 200,128,32);
 
@@ -73,40 +43,6 @@ game.screens.menu = new game.screens.menu();
 
 
 
-/*
-About
-
-*/
-
-game.screens.about = function(){
-
-	this.clickZones=[
-		{x:0,y:0,w:game.width,h:game.height,"click":function(){
-			diesel.raiseEvent("screenChange","about","menu")
-			}
-		}
-
-	]
-	this.draw=function(){
-		var about = [
-		"Text about teh game goes here",
-
-		"TEAM:",
-		" Lee Brunjes -Code, Lead"," Paul Caritj - Code",   " Felicity Gong - Arts"," Jim Kliss -Plot"
-		];
-		this.clearAllContexts();
-		game.context.main.fillText("About:",16,32);
-		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
-
-		this.fillTextCenteredX(game.context.main,game.version,game.width/2,420);
-		game.context.back.fillStyle="rgba(255,255,255,.125)";
-	};
-
-
-};
-
-game.screens.about.prototype = game.screens.base;
-game.screens.about = new game.screens.about();
 
 /*
 Gameover
@@ -194,7 +130,7 @@ game.screens.gameIntro = function(){
 
 this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
-		diesel.raiseEvent("screenChange","gameIntro", this.to, "chooser");
+		diesel.raiseEvent("screenChange","gameIntro", this.to, "chooser");	
 			}
 		}
 
@@ -230,51 +166,20 @@ this.update= function(ticks){
 
 this.screens =[
 {
-	text:[
-		"This is you:",
-		"You are seeking solitude",
-		"Avoid the probing stares of others."
-		,"",""
-	],
-	sprite:{
-		name:"player.png",
-		idx:0
-	}
+	text:[	"This is you:",		"You are seeking solitude",		"Avoid the probing stares of others."		,"",""	],
+	sprite:{		name:"player.png",		idx:0	}
 },
 {
-	text:[
-		"Avoid all the others",
-		"Seek the quiet spaces.",
-		"",
-		""
-	],
-	sprite:{
-		name:"band.png",
-		idx:0
-	}
+	text:["Avoid all the others","Seek the quiet spaces.","",""	],
+	sprite:{		name:"band.png",		idx:0	}
 },
 {
-	text:[
-	
-		"Find the Stars","","They are the key","",""
-	],
-	sprite:{
-		name:"ents.png",
-		idx:4
-	}
+	text:[		"Find the Stars","","They are the key","",""	],
+		sprite:{		name:"ents.png",		idx:4	}
 },
 {
-	text:[
-	
-		"You Only Get One","Chance."," One thing.",
-		"Choose Carefully.","",""
-		
-		
-	],
-	sprite:{
-		name:"banana.png",
-		idx:0
-	}
+	text:[	"You Only Get One","Chance."," One thing.",		"Choose Carefully.","",""		],
+	sprite:{		name:"banana.png",		idx:0	}
 }
 ];
 
@@ -333,9 +238,7 @@ this.clickZones=[
 		{x:360,y:600,w:60,h:30,click:function(){
 			
 			if(
-				game.screens.chooser.selected != null && 
-
-				confirm("You only get one.\n\n Continue?")
+				game.screens.chooser.selected != null
 			){
 				if(game.objects.weapons[game.screens.chooser.items[game.screens.chooser.selected].name]){
 					game.objects.player.item = new game.objects.weapons[game.screens.chooser.items[
@@ -344,7 +247,7 @@ this.clickZones=[
 				else{
 						console.log("missing weapon",game.screens.chooser.items[
 							game.screens.chooser.selected].name);
-						game.objects.player.item  =game.screens.chooser.items[
+						game.objects.player.item =game.screens.chooser.items[
 							game.screens.chooser.selected].name;
 				}
 				diesel.raiseEvent("screenChange","chooser", "level", null);
@@ -361,13 +264,13 @@ this.reset = function(from, to){
 }
 this.selected = null;
 this.items = [
-	{name:"banana",text:["The Banana","The hunble banana","Quite slippery","Avoid some casual encounters"],"sprite":{"name":"banana.png","idx":0}},
+	{name:"banana",text:["The Banana","The hunble banana","mm.mmm.mmm..mm?","Avoid casual encounters"],"sprite":{"name":"banana.png","idx":0}},
 	{name:"fan",text:["The Fan","Hide Your Stars.","Makes stars score more"],"sprite":{"name":"fan.png","idx":0}},
 	{name:"headphones",text:["The Headphones","Avoid eye contact","Awkwardness range reduced"],"sprite":{"name":"headphones.png","idx":0}},
 	{},
 	{name:"band",text:["Funny Hats","I play bassoon?","Get ignored By the band"],"sprite":{"name":"band.png","idx":0}},
-	{name:"cheer",text:["School Spirit","Pom Poms are in","Cheerleaders leave you alone."],"sprite":{"name":"cheer.png","idx":0}},
-	{name:"grease",text:["Look the part","Eehhhhh?","Pal up with the Greaers"],"sprite":{"name":"greaser.png","idx":0}},
+	{name:"cheer",text:["School Spirit","Give me a U! Gold.","Cheerleaders leave you alone."],"sprite":{"name":"cheer.png","idx":0}},
+	{name:"grease",text:["Look the part","Eehhhhh?","Pal up with the Greaers"],"sprite":{"name":"grease.png","idx":0}},
 	{name:"prep",text:["Pop that Collar","Bro? Bro.","Preps overlook you"],"sprite":{"name":"prep.png","idx":0}},
 	
 
@@ -452,7 +355,7 @@ game.screens.level = function(){
 			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
 				if(this.current.entities[_y][_x] == this.prev){
 					this.offset.x = _x *this.grid ;
-					this.offset.y =  _y *this.grid;
+					this.offset.y = _y *this.grid;
 				}
 			}
 		}
@@ -526,7 +429,7 @@ game.screens.level = function(){
 
 
 		//draw the world
-    // tiles...
+ // tiles...
 		for(var _y = 0; _y < this.current.tiles.length; _y++){
 			for(var _x = 0; _x < this.current.tiles[_y].length; _x++){
 
@@ -542,8 +445,8 @@ game.screens.level = function(){
 			}
 		}
 
-    // entities...
-    for(var _y = 0; _y < this.current.entities.length; _y++){
+ // entities...
+ for(var _y = 0; _y < this.current.entities.length; _y++){
 			for(var _x = 0; _x < this.current.entities[_y].length; _x++){
 
 				var idx = this.current.entities[_y][_x];
@@ -557,8 +460,16 @@ game.screens.level = function(){
 						}
 				if(idx >=0){
 						var spr = diesel.spriteCache["ents.png"];
-					
-						var src = spr.getSprite( idx, Math.floor(diesel.frameCount/10)%spr.frames );
+						var frame = Math.floor(diesel.frameCount/10)%spr.frames;
+						if(idx>=8){
+							//frame is equal to the number of
+							frame =0; 
+							while(_x -frame -1 > 0 && this.current.entities[_y][_x -frame] == idx ){
+								frame++;
+							}
+						
+						}
+						var src = spr.getSprite( idx, frame);
 						game.context.main.drawImage(spr.image, src[0],src[1],src[2],src[3],
 							_x *this.grid, _y*this.grid ,this.grid,this.grid);
 				}
@@ -658,6 +569,7 @@ game.screens.level = function(){
 						game.keysDown[keyname] =true;
 					}
 				}
+				event.preventDefault();
 		};
 	this.keyup =function(event){
 		for(keyname in game.keys){
@@ -665,11 +577,8 @@ game.screens.level = function(){
 				game.keysDown[keyname] =false;
 			}
 		}
-
-		if(event.keyCode ===27){
-			game.settings.screen = "menu";
-			game.settings.inGame = true;
-		}
+	
+		event.preventDefault();
 	};
 };
 
