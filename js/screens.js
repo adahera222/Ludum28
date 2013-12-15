@@ -50,7 +50,7 @@ Gameover
 */
 
 game.screens.endGame = function(){
-	this.slides =[];
+	this.slides ={};
 	this.i =0;
 	this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
@@ -63,27 +63,18 @@ game.screens.endGame = function(){
 
 	]
 	this.draw=function(){
-		var about = ["Game over Text"];
-		this.clearAllContexts();
+	
 
-		this.drawMenu(game.context.main, about, 32,32,game.width-64,388);
-		
-		if(i < this.slides.length){
-			//TODO DRAW SLIDE
-		}
-
-		};
+	};
 		
 	this.reset = function(){
-		for(key in game.progress){
-			
-			//TODO setup engame slides based on 
-			var slide = {"key": key};
-			
+		this.slides.weapon = "Intersting Choice there. Who picks the "+game.objects.player.item.type+"?";
 		
-			this.slides.push(slide);
-		
+		if(game.objects.player.item.type =="fan"){
+			this.slides.weapons = this.slides.weapon + " So IMBA. TBH.";
 		}
+		
+		this.slides.forest = "The Forest ("++" point)"
 	
 	}
 
@@ -130,7 +121,8 @@ game.screens.gameIntro = function(){
 
 this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
-		diesel.raiseEvent("screenChange","gameIntro", this.to, "chooser");	
+				game.screens.gameIntro.i++;
+				game.screens.gameIntro.lastScreen = 0;
 			}
 		}
 
@@ -178,7 +170,7 @@ this.screens =[
 		sprite:{		name:"ents.png",		idx:4	}
 },
 {
-	text:[	"You Only Get One","Chance."," One thing.",		"Choose Carefully.","",""		],
+	text:["You only get one.",  "One thing.",  "One Chance." , "Choose Wisely"	],
 	sprite:{		name:"banana.png",		idx:0	}
 }
 ];
@@ -512,9 +504,10 @@ game.screens.level = function(){
 			game.context.vfx.drawImage(spr.image, src[0],src[1],src[2],src[3],
 						_x * i , _y ,32,32);
 		}
-		
+		var fill = game.context.vfx.fillStyle;
+		game.context.vfx.fillStyle = "#ffffff";
 		game.context.vfx.fillText(game.score, 0,64);
-
+		game.context.vfx.fillStyle =fill;
 
 
 	};

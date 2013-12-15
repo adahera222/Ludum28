@@ -37,7 +37,7 @@ header,footer{
 canvas,video{
 	background:transparent;
 	position:absolute;
-	border:1px solid #343;
+
 		 
 	user-select: none;
 	-moz-user-select: none;
