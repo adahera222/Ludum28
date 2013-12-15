@@ -57,7 +57,7 @@ game.screens.menu = function(){
 		game.context.main.fillStyle="#ffffff";
 		game.context.vfx.fillStyle="#ffffff";
 		game.context.main.fillText("MENU:",16,32);
-		this.drawMenu(game.context.main, this.options, 32,32, 128,128,32);
+		this.drawMenu(game.context.main, this.options, 32,32, 200,128,32);
 
 		this.fillTextCenteredX(game.context.vfx,game.version,game.width/2,420);
 
