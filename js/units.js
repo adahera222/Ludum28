@@ -21,6 +21,8 @@ this.facing = "down";
 this.r = game.down;
 this.collideTimer = -10;
 this.collideImmuneTime = 2000;
+this.tooClose = 10* game.screens.level.grid;
+
 this.update= function(ticks){
 
 	if(this.item){
@@ -69,12 +71,20 @@ this.update= function(ticks){
 		this.collideTimer -= Math.floor(ticks*1000);	
 	}
 	else{
+		var alone = 1;
 		for(var i =0; i < game.screens.level.units.length;i++){
 			var u = game.screens.level.units[i];
 			if(u.contains(this.x ,this.y)&& u.collides && this.collideTimer <=0){
 				diesel.raiseEvent("collision", this, u);
 			
 			}
+			if(alone && this.manhattanDistance(u.x,u.y) <= this.tooClose){
+				alone =false;
+				//TODO indicate ths problem
+			}
+		}
+		if(alone && (diesel.frameCount%50 ==0)){
+			game.score++;
 		}
 	}
 	

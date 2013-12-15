@@ -8,7 +8,7 @@ var game ={
 	width: 800,
 	height: 800,
 	fontsize:16,
-	font:"16px daniel, sans-serif",	
+	font:"30px daniel, sans-serif",	
 	up:0,
 	down: Math.PI,
 	left: Math.PI/2,
@@ -167,6 +167,33 @@ var game ={
 						diesel.raiseEvent("screenChange","level","endGame");
 					}
 									
+			},
+			4:function(player){
+				//				star
+				var nearby =0,score = 10000, aloneenough = 3;
+				//test to see if you are alone
+				//if not adjust score
+				for(var i =0 ;i < game.screens.level.units.length;i++){
+					var d = game.screens.level.units[i].distance(player.x, player.y)
+				 if(d < player.tooClose){
+				 	nearby++;
+				 	score = Math.floor(score * (d/player.tooClose));
+				 }
+				}
+				
+				if(nearby <= aloneenough){
+				 game.score += score;
+				 //TODO Text effect
+				}
+				
+				var loc = game.screens.level.getGridRef(player.x, player.y);
+				game.screens.level.current.entities[loc[1]][loc[0]] = 5;
+				
+				
+				
+				
+				
+				
 			}
 		}
 	},
@@ -175,10 +202,12 @@ var game ={
 		{"sprite":"tiles.png","size":[32,32],"keys":{},"frames":1},
 		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4},
 		{"sprite":"hearts.png","size":[64,64],"keys":{"full":0,"empty":1},"frames":4},
+		{"sprite":"star.png","size":[64,64],"keys":{"empty":0,"full":1},"frames":1},
 		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4},
 		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"cheer.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"grease.png","size":[64,64],"keys":{"used":0,"active":0},"frames":1},
+
 		{"sprite":"fan.png","size":[64,64],"keys":{"active":0,"used":1},"frames":4}
 		
 	],

@@ -433,6 +433,8 @@ game.screens.level = function(){
 			game.context.vfx.drawImage(spr.image, src[0],src[1],src[2],src[3],
 						_x * i , _y ,32,32);
 		}
+		
+		game.context.vfx.fillText(game.score, 0,64);
 
 
 
