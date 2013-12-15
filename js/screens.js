@@ -54,6 +54,10 @@ game.screens.endGame = function(){
 
 	this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
+				game.score =0;
+				game.progress.forest = 0;
+				game.progress.mall =0;
+				game.progress.stadium =0;
 				diesel.raiseEvent("screenChange","endGame","menu")	
 			}
 		}
