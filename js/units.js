@@ -417,7 +417,7 @@ game.objects.weapons.fan.prototype = new  game.objects.weapons.base();
 game.objects.weapons.headphones=function(){
 this.type="headphones";
 this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
-this.y= -16;
+this.y= -8;
 game.objects.player.tooClose = game.objects.player.tooClose *.75;
 }
 game.objects.weapons.headphones.prototype = new  game.objects.weapons.base();
