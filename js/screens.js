@@ -92,7 +92,7 @@ game.screens.about = function(){
 		"Text about teh game goes here",
 
 		"TEAM:",
-		" Lee Brunjes"," Paul Caritj",   " Felicity Gong"," Jim Kliss"
+		" Lee Brunjes -Code, Lead"," Paul Caritj - Code",   " Felicity Gong - Arts"," Jim Kliss -Plot"
 		];
 		this.clearAllContexts();
 		game.context.main.fillText("About:",16,32);
@@ -194,7 +194,7 @@ game.screens.gameIntro = function(){
 
 this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
-		diesel.raiseEvent("screenChange","level", this.to, null);
+		diesel.raiseEvent("screenChange","gameIntro", this.to, "chooser");
 			}
 		}
 
@@ -202,33 +202,86 @@ this.clickZones=[
 
 this.reset = function(from, to){
 	this.to= to;
-	game.context.vfx.clearRect(0,0,800,800);
-	game.context.vfx.fillStyle="rgba(255,255,255, 0.5)";
 	this.i = 0;
+	this.clearAllContexts();
 }
 
 this.i=0;
-this.screen =0;
-this.grid =60;
-this.to;
 
-this.screentime = 3000;
+this.to;
+this.lastScreen =0;
+this.screenTime = 3000;
 
 this.draw =function(){
 	//TODO DRAW AN INTO instead of a descdning line.
-	game.context.vfx.fillRect(0,this.grid*i,game.width,this.grid);
+		this.clearAllContexts();
+		this.drawScreen(game.context.vfx,this.screens[this.i], 32,32,game.width-64, game.height-64);
 }
 this.update= function(ticks){
-	i++;
-	if(i *this.grid >game.height){
-		diesel.raiseEvent("screenChange","level", this.to, null);
+	this.lastScreen += ticks*1000;
+	if(this.lastScreen > this.screenTime){
+		this.i++;
+		this.lastScreen =0;
+	}
+	if(this.i >= this.screens.length){
+		diesel.raiseEvent("screenChange","gameIntro", this.to, "chooser");	
 	}
 }
 
+this.screens =[
+{
+	text:[
+		"This is you:",
+		"You are seeking solitude",
+		"Avoid the probing stares of others."
+		,"",""
+	],
+	sprite:{
+		name:"player.png",
+		idx:0
+	}
+},
+{
+	text:[
+		"Avoid all the others",
+		"Seek the quiet spaces.",
+		"",
+		""
+	],
+	sprite:{
+		name:"band.png",
+		idx:0
+	}
+},
+{
+	text:[
+	
+		"Find the Stars","","They are the key","",""
+	],
+	sprite:{
+		name:"ents.png",
+		idx:4
+	}
+},
+{
+	text:[
+	
+		"You Only Get One","Chance."," One thing.",
+		"Choose Carefully.","",""
+		
+		
+	],
+	sprite:{
+		name:"banana.png",
+		idx:0
+	}
+}
+];
 
 }
 game.screens.gameIntro.prototype = game.screens.base;
 game.screens.gameIntro= new game.screens.gameIntro();
+
 
 /*
 Level change
@@ -238,7 +291,7 @@ game.screens.levelChange = function(){
 this.reset = function(from, to){
 	this.to= to;
 	game.context.vfx.clearRect(0,0,800,800);
-	game.context.vfx.fillStyle="rgba(255,255,255, 0.5)";
+
 }
 
 this.o=0;
@@ -262,6 +315,103 @@ game.screens.levelChange.prototype = game.screens.base;
 game.screens.levelChange= new game.screens.levelChange();
 
 
+/*
+Chooser
+*/
+game.screens.chooser = function(){
+this.clickZones=[
+		{x:0,y:64,w:256,h:256,click:function(){
+			var i = Math.floor(diesel.mouseY/32);
+		
+			i-=2;
+			
+			game.screens.chooser.selected = i;
+			
+			console.log(i,this.selected);
+		
+		}},
+		{x:360,y:600,w:60,h:30,click:function(){
+			
+			if(
+				game.screens.chooser.selected != null && 
+				game.screens.chooser.selected != 3 &&
+				confirm("You only get one.\n\n Continue?")
+			){
+				if(game.objects.weapons[game.screens.chooser.items[game.screens.chooser.selected]]){
+					game.objects.player.item = new game.weapons[game.screens.chooser.items[
+						game.screens.chooser.selected].name]();
+				}
+				else{
+						console.log("missing weapon",game.screens.chooser.items[
+							game.screens.chooser.selected].name);
+						game.objects.player.item  =game.screens.chooser.items[
+							game.screens.chooser.selected].name;
+				}
+				diesel.raiseEvent("screenChange","chooser", "level", null);
+				
+			}			
+			
+		
+		}},
+		];
+this.reset = function(from, to){
+	this.to= to;
+
+
+}
+this.selected = null;
+this.items = [
+	{name:"banana",text:["The Banana","The hunble banana","Quite slippery","Avoid some casual encounters"],"sprite":{"name":"banana.png","idx":0}},
+	{name:"fan",text:["The Fan","Hide Your Stars.","Makes stars score more"],"sprite":{"name":"fan.png","idx":0}},
+	{name:"headphones",text:["The Headphones","Avoid eye contact","Awkwardness range reduced"],"sprite":{"name":"headphones.png","idx":0}},
+	{},
+	{name:"band",text:["Funny Hats","I play bassoon?","Get ignored By the band"],"sprite":{"name":"band.png","idx":0}},
+	{name:"cheer",text:["School Spirit","Pom Poms are in","Cheerleaders leave you alone."],"sprite":{"name":"cheer.png","idx":0}},
+	{name:"greaser",text:["Look the part","Eehhhhh?","Pal up with the Greaers"],"sprite":{"name":"greaser.png","idx":0}},
+	{name:"prep",text:["Pop that Collar","Bro? Bro.","Preps overlook you"],"sprite":{"name":"prep.png","idx":0}},
+	
+
+];
+
+
+this.draw =function(){
+
+//TODO make this pretty
+	game.context.vfx.clearRect(0,0,800,800);
+	game.context.vfx.fillText("Choose Wisely", 32,32);
+	
+	game.context.vfx.fillText("Banana", 64,96);
+	game.context.vfx.fillText("Fan", 64,128);
+	game.context.vfx.fillText("Headphones", 64,160);
+	game.context.vfx.fillText("Or join:", 32,192);
+	game.context.vfx.fillText("Band", 64,224);
+	game.context.vfx.fillText("Cheerleaders", 64,256);
+	game.context.vfx.fillText("Greasers", 64,288);
+	game.context.vfx.fillText("Preppies", 64,320);
+	
+	if(this.selected != 3 && this.items[this.selected]){
+	
+		this.drawScreen(game.context.vfx,this.items[this.selected] , 352,64,256,288);
+		game.context.vfx.fillRect(30,32* this.selected +2 +64, 16,28);
+	}
+	else{
+	console.log(this.items[this.selected], this.selected);
+	}
+	
+	
+	
+	
+	//draw okay button
+	game.context.vfx.fillText("OK", 370,630);
+
+}
+
+
+}
+game.screens.chooser.prototype = game.screens.base;
+game.screens.chooser= new game.screens.chooser();
+
+
 
 /*
 Level
@@ -279,14 +429,6 @@ game.screens.level = function(){
 
 	this.startFrame =0;
 
-	this.clickZones=[
-		{x:32,y:32,w:game.width-64,h:game.height-64,click:function(){
-			if(!game.screens.level.started){
-				game.screens.level.started =true;
-
-			}
-		}}
-	];
 
 
 
@@ -296,7 +438,7 @@ game.screens.level = function(){
 		this.units = [];
 		this.effects =[];
 		this.intel =0;
-		this.started =false;
+		this.started =true;
 		this.startFrame = diesel.frameCount;
 
 		game.keysDown.up =false;

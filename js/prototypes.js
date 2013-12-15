@@ -239,31 +239,31 @@ game.screens.base = {
 		lineh = game.fontsize;
 		}
 		
-		var fill = ctx.fillStyle;
-		var boxY = Math.floor((diesel.mouseY -y)/lineh);
-		var inside =false;
-		if(diesel.mouseX > x && diesel.mouseX < x+w 
-			&& diesel.mouseY >y && diesel.mouseY < y +h){
-			ctx.fillRect(x,boxY * lineh +y,w,lineh);
-			//? fill it an swap the option
-			inside  =true;
-		}
+		
 		
 		//show all the text.
 		for(var i =0 ; i <menuTextArray.length; i++){
 	
-			if(i !=boxY || !inside){
-				ctx.fillText(menuTextArray[i], x,y + (i +1)*lineh);
-			}
-			else{
-				ctx.fillStyle= "#000000";
-				ctx.fillText(menuTextArray[i], x,y + (i +1)*lineh);
-				ctx.fillStyle = fill;
-			}
+			ctx.fillText(menuTextArray[i], x,y + (i +1)*lineh);
+			
 		}
 		
 		//TODO scroll?
 	
+	},
+	
+	drawScreen:function(ctx, screen, x,y,w,h){
+		if(screen.text){
+			this.drawMenu(ctx, screen.text ,x,y,w,h, Math.floor(h/screen.text.length));
+		}
+		
+		if(screen.sprite && diesel.spriteCache[screen.sprite.name]){
+				var spr = diesel.spriteCache[screen.sprite.name];
+				var idx = 0 | screen.sprite.idx;
+				var src = spr.getSprite( idx, Math.floor(diesel.frameCount/10)%spr.frames );
+				ctx.drawImage(spr.image, src[0],src[1],src[2],src[3],
+					x + w/3*2, y ,w/4, h/4);
+		}
 	},
 	
 	//clears all the contexts.

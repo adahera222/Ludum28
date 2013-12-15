@@ -175,10 +175,9 @@ var game ={
 				//test to see if you are alone
 				//if not adjust score
 				for(var i =0 ;i < game.screens.level.units.length;i++){
-					var d = game.screens.level.units[i].distance(player.x, player.y)
-				 if(d < player.tooClose){
+				 if(game.screens.level.units[i].distance(player.x, player.y) < player.tooClose){
 				 	nearby++;
-				 	score = Math.floor(score * (d/player.tooClose));
+				 	score =score /2;
 				 }
 				}
 				
