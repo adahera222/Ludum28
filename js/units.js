@@ -15,7 +15,8 @@ this.maxspeed = 2*game.screens.level.grid;
 this.speed = 0;
 this.w = game.screens.level.grid/2;
 this.h =game.screens.level.grid/2;
-this.sprite=null;
+this.sprite=new diesel.spriteInstance(diesel.spriteCache["player.png"]);
+this.sprite.animation = 0;
 this.item =null;
 this.facing = "down";
 this.r = game.down;
@@ -69,8 +70,10 @@ this.update= function(ticks){
 	//collision
 	if(this.collideTimer >0){
 		this.collideTimer -= Math.floor(ticks*1000);	
+		this.sprite.animation = "hurt";
 	}
 	else{
+	this.sprite.animation = "walk";
 		var alone = 1;
 		for(var i =0; i < game.screens.level.units.length;i++){
 			var u = game.screens.level.units[i];
@@ -78,12 +81,23 @@ this.update= function(ticks){
 				diesel.raiseEvent("collision", this, u);
 			
 			}
-			if(alone && this.manhattanDistance(u.x,u.y) <= this.tooClose){
+			if(this.manhattanDistance(u.x,u.y) <= this.tooClose){
 				alone =false;
 				//TODO indicate ths problem
+				game.context.vfx.beginPath();
+				game.context.vfx.strokeStyle = "rgba(255,0,0,"+(1 -(this.manhattanDistance(u.x,u.y) / this.tooClose))+")";
+				game.context.vfx.moveTo(this.x, this.y);
+				game.context.vfx.lineTo(u.x,u.y);
+				game.context.vfx.lineWidth =this.w/2 * (1-(this.manhattanDistance(u.x,u.y) / this.tooClose));
+				game.context.vfx.stroke();
+				
+				game.context.vfx.closePath();
+				
+				game.context.vfx.clearRect(this.x -this.w/2, this.y - this.h/2 ,this.w, this.h);
+				game.context.vfx.clearRect(u.x -u.w/2, u.y - u.h/2 ,u.w, u.h);
 			}
 		}
-		if(alone && (diesel.frameCount%50 ==0)){
+		if(alone && (diesel.frameCount%5 ==0)){
 			game.score++;
 		}
 	}
@@ -102,6 +116,27 @@ this.update= function(ticks){
 	}
 
 }
+this.draw =function(context){
+		context.save();
+			context.translate(this.x,this.y);
+
+			if(this.facing == "left"){
+				context.translate(this.w,this.h *-1);
+				context.scale(-1,1);
+				this.sprite.draw(context,this.w*2,this.h*2);
+				context.scale(-1,1);
+			}
+			else{
+				context.translate(this.w*-1,this.h*-1);
+				this.sprite.draw(context,this.w*2,this.h*2);
+			}
+		context.restore();
+		
+		if(diesel.frameCount% 10 ==0){
+			this.sprite.nextFrame();
+		}
+	}
+
 
 
 }

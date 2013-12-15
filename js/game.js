@@ -102,6 +102,7 @@ var game ={
 		"collision":function(event){
 			game.objects.player.collideTimer = game.objects.player.collideImmuneTime;
 			game.hearts--;
+			game.score -=500;
 			if(game.hearts <=0){
 					console.log("gg");
 					diesel.raiseEvent("screenChange","level","endGame",false);				
@@ -203,6 +204,7 @@ var game ={
 		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4},
 		{"sprite":"hearts.png","size":[64,64],"keys":{"full":0,"empty":1},"frames":4},
 		{"sprite":"prep.png","size":[64,64],"keys":{"used":0,"active":0},"frames":1},
+		{"sprite":"player.png","size":[64,64],"keys":{"walk":0,"hurt":1},"frames":1},
 		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4},
 		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"cheer.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
