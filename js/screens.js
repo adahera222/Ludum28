@@ -97,11 +97,11 @@ game.screens.endGame = function(){
 			}
 		}
 		this.slides.mall = "The Mall ("+game.progress.mall+" points)";
-		if(game.progress.mall > 20000){
+		if(game.progress.mall >= 20000){
 			this.slides.mallDetails = "Excellent work finding a quiet place ina busy mall.";
 		}
 		else{
-			if(game.progress.mall > 10000){
+			if(game.progress.mall >= 10000){
 				this.slides.mallDetails = "Man, that mall score. Prety bad.";
 			}
 			else{
@@ -115,7 +115,7 @@ game.screens.endGame = function(){
 			this.slides.stadiumDetails = "Nice you even avoided the marching bad.";
 		}
 		else{
-			if(game.progress.stadium > 10000){
+			if(game.progress.stadium >= 10000){
 				this.slides.stadiumDetails = "You gotta avoid that band practice more.";
 			}
 			else{
