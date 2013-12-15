@@ -337,8 +337,8 @@ this.clickZones=[
 				game.screens.chooser.selected != 3 &&
 				confirm("You only get one.\n\n Continue?")
 			){
-				if(game.objects.weapons[game.screens.chooser.items[game.screens.chooser.selected]]){
-					game.objects.player.item = new game.weapons[game.screens.chooser.items[
+				if(game.objects.weapons[game.screens.chooser.items[game.screens.chooser.selected].name]){
+					game.objects.player.item = new game.objects.weapons[game.screens.chooser.items[
 						game.screens.chooser.selected].name]();
 				}
 				else{
@@ -367,7 +367,7 @@ this.items = [
 	{},
 	{name:"band",text:["Funny Hats","I play bassoon?","Get ignored By the band"],"sprite":{"name":"band.png","idx":0}},
 	{name:"cheer",text:["School Spirit","Pom Poms are in","Cheerleaders leave you alone."],"sprite":{"name":"cheer.png","idx":0}},
-	{name:"greaser",text:["Look the part","Eehhhhh?","Pal up with the Greaers"],"sprite":{"name":"greaser.png","idx":0}},
+	{name:"grease",text:["Look the part","Eehhhhh?","Pal up with the Greaers"],"sprite":{"name":"greaser.png","idx":0}},
 	{name:"prep",text:["Pop that Collar","Bro? Bro.","Preps overlook you"],"sprite":{"name":"prep.png","idx":0}},
 	
 
@@ -394,9 +394,7 @@ this.draw =function(){
 		this.drawScreen(game.context.vfx,this.items[this.selected] , 352,64,256,288);
 		game.context.vfx.fillRect(30,32* this.selected +2 +64, 16,28);
 	}
-	else{
-	console.log(this.items[this.selected], this.selected);
-	}
+	
 	
 	
 	

@@ -124,17 +124,25 @@ this.draw =function(context){
 				context.translate(this.w,this.h *-1);
 				context.scale(-1,1);
 				this.sprite.draw(context,this.w*2,this.h*2);
-				context.scale(-1,1);
+		
 			}
 			else{
 				context.translate(this.w*-1,this.h*-1);
 				this.sprite.draw(context,this.w*2,this.h*2);
 			}
+			
+		
 		context.restore();
+		
+		if(this.item){
+			this.item.draw(game.context.main,this);
+		}
 		
 		if(diesel.frameCount% 10 ==0){
 			this.sprite.nextFrame();
 		}
+		
+		
 	}
 
 
@@ -369,3 +377,68 @@ this.update= function(ticks, id){
 game.objects.units.prep.prototype = new game.objects.units.base();
 
 
+
+
+game.objects.weapons.banana=function(){
+this.type="banana";
+this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.y= 16;
+this.x = 16;
+}
+game.objects.weapons.banana.prototype = new  game.objects.weapons.base();
+
+
+
+
+
+game.objects.weapons.fan=function(){
+this.type="fan";
+this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.y= 16;
+this.x = 8;
+}
+game.objects.weapons.fan.prototype = new  game.objects.weapons.base();
+
+
+
+
+game.objects.weapons.headphones=function(){
+this.type="headphones";
+this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.y= -16;
+}
+game.objects.weapons.headphones.prototype = new  game.objects.weapons.base();
+
+
+
+
+game.objects.weapons.band=function(){
+this.type="band";
+this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.y =-16;
+}
+game.objects.weapons.band.prototype = new  game.objects.weapons.base();
+
+
+
+game.objects.weapons.cheer=function(){
+this.type="cheer";
+this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.x = -16;
+this.y = 16;
+}
+game.objects.weapons.cheer.prototype = new  game.objects.weapons.base();
+
+game.objects.weapons.grease=function(){
+this.type="grease";
+this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.y = -12;
+}
+game.objects.weapons.grease.prototype = new  game.objects.weapons.base();
+
+game.objects.weapons.prep=function(){
+this.type="prep";
+this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
+this.y = 16;
+}
+game.objects.weapons.prep.prototype = new  game.objects.weapons.base();

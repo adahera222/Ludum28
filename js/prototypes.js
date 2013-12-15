@@ -302,7 +302,7 @@ game.objects.units.base = function(){
 	this.id = -1;
 	this.type="unit";
 	this.x = 0;
-	this.y = 0;
+	this.y = 16;
 	this.w = 30;
 	this.h = 30;
 	this.weapon = null;
@@ -446,6 +446,22 @@ game.objects.weapons.base =function(){
 	}
 	this.update =function(ticks){
 		this.sinceLastFired +=ticks;
+		if(this.sprite && diesel.frameCount %10 == 0){
+			this.sprite.nextFrame();
+		}
+	}
+	this.draw =function(context, shooter){
+		context.save();
+			context.translate(shooter.x,shooter.y);
+			context.translate(this.x + this.w/-2, this.y-this.h/2);
+			if(this.sprite){
+				
+				this.sprite.draw(context,this.w,this.h);
+			}
+			else{
+				context.fillRect(0,0,this.w,this.h);
+			}
+		context.restore();
 	}
 };
 game.objects.weapons.base.prototype = game.objects.base;
