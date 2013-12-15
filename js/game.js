@@ -101,15 +101,20 @@ var game ={
 		},
 		"collision":function(event){
 			game.objects.player.collideTimer = game.objects.player.collideImmuneTime;
-			game.hearts--;
-			game.score -=500;
-			if(game.hearts <=0){
-					console.log("gg");
-					diesel.raiseEvent("screenChange","level","endGame",false);				
+			if(game.objects.player.item.type != "banana"){ 
+				game.hearts--;
+				game.score -=500;
+				if(game.hearts <=0){
+						console.log("gg");
+						diesel.raiseEvent("screenChange","level","endGame",false);				
+				}
+				//TODO trigger sounds
+			
 			}
-			//TODO trigger sounds
-				console.log("collision",event, game.hearts);
-		
+			else{
+				//TODO banana things
+				game.objects.player.item.sprite.animation = "closed";
+			}
 			
 		},
 		"levelChange":function(event){
@@ -175,9 +180,14 @@ var game ={
 				//test to see if you are alone
 				//if not adjust score
 				for(var i =0 ;i < game.screens.level.units.length;i++){
-				 if(game.screens.level.units[i].distance(player.x, player.y) < player.tooClose){
+				 if(game.screens.level.units[i].manhattanDistance(player.x, player.y) < player.tooClose){
 				 	nearby++;
-				 	score =score /2;
+				 	if(game.objects.player.item.type != "fan"){
+				 		score =score /2;
+				 	}
+				 	else{
+				 		score = score *.75;
+				 	}
 				 }
 				}
 				
@@ -208,7 +218,7 @@ var game ={
 		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"cheer.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"grease.png","size":[64,64],"keys":{"used":0,"active":0},"frames":1},
-
+		{"sprite":"headphones.png","size":[64,64],"keys":{"active":0,"used":1},"frames":4},
 		{"sprite":"fan.png","size":[64,64],"keys":{"active":0,"used":1},"frames":4}
 		
 	],

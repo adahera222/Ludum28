@@ -77,24 +77,26 @@ this.update= function(ticks){
 		var alone = 1;
 		for(var i =0; i < game.screens.level.units.length;i++){
 			var u = game.screens.level.units[i];
-			if(u.contains(this.x ,this.y)&& u.collides && this.collideTimer <=0){
-				diesel.raiseEvent("collision", this, u);
+			if(this.item.type != u.type){
+				if(u.contains(this.x ,this.y)&& u.collides && this.collideTimer <=0){
+					diesel.raiseEvent("collision", this, u);
 			
-			}
-			if(this.manhattanDistance(u.x,u.y) <= this.tooClose){
-				alone =false;
-				//TODO indicate ths problem
-				game.context.vfx.beginPath();
-				game.context.vfx.strokeStyle = "rgba(255,0,0,"+(1 -(this.manhattanDistance(u.x,u.y) / this.tooClose))+")";
-				game.context.vfx.moveTo(this.x, this.y);
-				game.context.vfx.lineTo(u.x,u.y);
-				game.context.vfx.lineWidth =this.w/2 * (1-(this.manhattanDistance(u.x,u.y) / this.tooClose));
-				game.context.vfx.stroke();
+				}
+				if(this.manhattanDistance(u.x,u.y) <= this.tooClose){
+					alone =false;
+					//TODO indicate ths problem
+					game.context.vfx.beginPath();
+					game.context.vfx.strokeStyle = "rgba(255,0,0,"+(1 -(this.manhattanDistance(u.x,u.y) / this.tooClose))+")";
+					game.context.vfx.moveTo(this.x, this.y);
+					game.context.vfx.lineTo(u.x,u.y);
+					game.context.vfx.lineWidth =this.w/2 * (1-(this.manhattanDistance(u.x,u.y) / this.tooClose));
+					game.context.vfx.stroke();
 				
-				game.context.vfx.closePath();
+					game.context.vfx.closePath();
 				
-				game.context.vfx.clearRect(this.x -this.w/2, this.y - this.h/2 ,this.w, this.h);
-				game.context.vfx.clearRect(u.x -u.w/2, u.y - u.h/2 ,u.w, u.h);
+					game.context.vfx.clearRect(this.x -this.w/2, this.y - this.h/2 ,this.w, this.h);
+					game.context.vfx.clearRect(u.x -u.w/2, u.y - u.h/2 ,u.w, u.h);
+				}
 			}
 		}
 		if(alone && (diesel.frameCount%5 ==0)){
@@ -161,6 +163,7 @@ this.h = game.screens.level.grid*1.5;
 this.sprite = new diesel.spriteInstance(diesel.spriteCache["band.png"]);
 this.sprite.animation = 0;
 this.maxSpeed = game.screens.level.grid *2;
+this.type="band";
 
 this.draw =function(context){
 		context.save();
@@ -198,6 +201,7 @@ this.sprite = new diesel.spriteInstance(diesel.spriteCache["cheer.png"]);
 this.sprite.animation = 0;
 this.facing="down"
 this.maxSpeed = game.screens.level.grid * 3;
+this.type= "cheer";
 
 this.draw =function(context){
 		context.save();
@@ -252,6 +256,7 @@ this.sprite = new diesel.spriteInstance(diesel.spriteCache["grease.png"]);
 this.sprite.animation = 0;
 this.facing="down"
 this.maxSpeed = game.screens.level.grid;
+this.type="grease";
 
 this.draw =function(context){
 		context.save();
@@ -320,6 +325,7 @@ this.sprite = new diesel.spriteInstance(diesel.spriteCache["prep.png"]);
 this.sprite.animation = 0;
 this.facing="down"
 this.maxSpeed = game.screens.level.grid;
+this.type="prep";
 
 this.draw =function(context){
 		context.save();
@@ -384,6 +390,12 @@ this.type="banana";
 this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
 this.y= 16;
 this.x = 16;
+
+this.update=function(ticks){
+	if(game.objects.player.collideTimer <=0){
+		this.sprite.animation="open";
+	}
+};
 }
 game.objects.weapons.banana.prototype = new  game.objects.weapons.base();
 
@@ -406,6 +418,7 @@ game.objects.weapons.headphones=function(){
 this.type="headphones";
 this.sprite = new diesel.spriteInstance(diesel.spriteCache[this.type+".png"]);
 this.y= -16;
+game.objects.player.tooClose = game.objects.player.tooClose *.75;
 }
 game.objects.weapons.headphones.prototype = new  game.objects.weapons.base();
 

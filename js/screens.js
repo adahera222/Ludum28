@@ -334,7 +334,7 @@ this.clickZones=[
 			
 			if(
 				game.screens.chooser.selected != null && 
-				game.screens.chooser.selected != 3 &&
+
 				confirm("You only get one.\n\n Continue?")
 			){
 				if(game.objects.weapons[game.screens.chooser.items[game.screens.chooser.selected].name]){
