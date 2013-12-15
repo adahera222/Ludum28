@@ -252,9 +252,10 @@ game.screens.base = {
 	
 	},
 	
-	drawScreen:function(ctx, screen, x,y,w,h){
+	drawScreen:function(ctx, screen, x,y,w,h,lh){
+		lh = lh||game.fontsize;
 		if(screen.text){
-			this.drawMenu(ctx, screen.text ,x,y,w,h, Math.floor(h/screen.text.length));
+			this.drawMenu(ctx, screen.text ,x,y,w,h,lh );
 		}
 		
 		if(screen.sprite && diesel.spriteCache[screen.sprite.name]){

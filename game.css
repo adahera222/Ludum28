@@ -52,6 +52,7 @@ canvas,video{
 	background: url('data/sheet.jpg') top left no-repeat;
 	padding:231px 210px;
 	margin:1ex auto;
+	color:#333;
 }
 
 #game{

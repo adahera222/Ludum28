@@ -7,7 +7,7 @@ var game ={
 	version:"v 1",
 	width: 800,
 	height: 800,
-	fontsize:16,
+	fontsize:32,
 	font:"30px daniel, sans-serif",	
 	up:0,
 	down: Math.PI,

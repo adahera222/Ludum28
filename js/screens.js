@@ -51,19 +51,16 @@ Gameover
 
 game.screens.endGame = function(){
 	this.slides ={};
-	this.i =0;
+
 	this.clickZones=[
 		{x:0,y:0,w:game.width,h:game.height,"click":function(){
-				i++;
-				if(i >= this.slides.length){
-						diesel.raiseEvent("screenChange","endGame","menu")
-				}
+				diesel.raiseEvent("screenChange","endGame","menu")	
 			}
 		}
 
 	]
 	this.draw=function(){
-	
+		
 
 	};
 		
@@ -74,8 +71,97 @@ game.screens.endGame = function(){
 			this.slides.weapons = this.slides.weapon + " So IMBA. TBH.";
 		}
 		
-		this.slides.forest = "The Forest ("++" point)"
+		if(game.hearts <=0){
+		 this.slides.health ="You had a panic attack. Too much social interaction. ";
+		}
+		else{
+		if(game.heats ==game.maxHearts){
+			this.slides.health = "Nice! You didn't have to talk to anyone";
+		}
+		else{
+		this.slides.health = "";
+		}
+		}
+		
+		this.slides.forest = "The Forest ("+game.progress.forest+" points)";
+		
+		if(game.progress.forest >= 15000){
+			this.slides.forestDetails = "Great work in the forest. Good Solitude there.";
+		}
+		else{
+			if(game.progress.forest > 5000){
+				this.slides.forestDetails = "How were you social in the forest?";
+			}
+			else{
+				this.slides.forestDetails = "...";
+			}
+		}
+		this.slides.mall = "The Mall ("+game.progress.mall+" points)";
+		if(game.progress.mall > 20000){
+			this.slides.mallDetails = "Excellent work finding a quiet place ina busy mall.";
+		}
+		else{
+			if(game.progress.mall > 10000){
+				this.slides.mallDetails = "Man, that mall score. Prety bad.";
+			}
+			else{
+				this.slides.mallDetails = "Poor.";
+			}
+		}
+		
+		
+		this.slides.stadium = "The Stadium ("+game.progress.stadium+" points)";
+		if(game.progress.stadium >= 20000){
+			this.slides.stadiumDetails = "Nice you even avoided the marching bad.";
+		}
+		else{
+			if(game.progress.stadium > 10000){
+				this.slides.stadiumDetails = "You gotta avoid that band practice more.";
+			}
+			else{
+				this.slides.stadiumDetails = "Nice Try.";
+			}
+		}
+		
+		//calculate solitude.
+		var solitude = game.score - game.progress.forest -game.progress.mall-game.progress.stadium
+		 +(500 * (game.maxHearts - game.hearts));
+		;
+		
+		
+		
+		
 	
+		this.clearAllContexts();
+		
+		game.context.main.fillText(this.slides.weapon, 0,32);
+		game.context.main.fillText(this.slides.health, 0,64);
+		
+		if(game.progress.forest){
+			game.context.main.fillText(this.slides.forest, 0,96);
+			game.context.main.fillText(this.slides.forestDetails, 0,128);
+		}
+		if(game.progress.stadium){
+			game.context.main.fillText(this.slides.stadium, 0,160);
+			game.context.main.fillText(this.slides.stadiumDetails, 0,192);
+		}
+		if(game.progress.mall){
+			game.context.main.fillText(this.slides.mall, 0,224);
+			game.context.main.fillText(this.slides.mallDetails, 0,256);
+		}
+		
+		
+	this.fillTextCenteredX(game.context.main,"Solitude Score:"+solitude, 400,400);
+		
+		
+	this.fillTextCenteredX(game.context.main,"Total Score:"+game.score, 400,432);
+		
+	this.fillTextCenteredX(game.context.main,"click to go back to the start", 400,700);
+		
+		
+		
+		
+		
 	}
 
 
@@ -138,19 +224,17 @@ this.i=0;
 
 this.to;
 this.lastScreen =0;
-this.screenTime = 3000;
+this.screenTime = 5000;
 
 this.draw =function(){
 	//TODO DRAW AN INTO instead of a descdning line.
 		this.clearAllContexts();
-		this.drawScreen(game.context.vfx,this.screens[this.i], 32,32,game.width-64, game.height-64);
+		if(this.screens[this.i]){
+			this.drawScreen(game.context.vfx,this.screens[this.i], 32,32,game.width-64, game.height-64,48);
+		}
 }
 this.update= function(ticks){
-	this.lastScreen += ticks*1000;
-	if(this.lastScreen > this.screenTime){
-		this.i++;
-		this.lastScreen =0;
-	}
+	
 	if(this.i >= this.screens.length){
 		diesel.raiseEvent("screenChange","gameIntro", this.to, "chooser");	
 	}
@@ -158,15 +242,15 @@ this.update= function(ticks){
 
 this.screens =[
 {
-	text:[	"This is you:",		"You are seeking solitude",		"Avoid the probing stares of others."		,"",""	],
+	text:[	"This is you:",		"You are seeking solitude",		"Avoid the probing stares ","of other people.","","Certainly don't talk to them.","Definately don't touch them."	],
 	sprite:{		name:"player.png",		idx:0	}
 },
 {
-	text:["Avoid all the others","Seek the quiet spaces.","",""	],
+	text:["Being far away", "from other people","gets you a slow trickle of points","","avoid their red and piercing glares"	],
 	sprite:{		name:"band.png",		idx:0	}
 },
 {
-	text:[		"Find the Stars","","They are the key","",""	],
+	text:["Find the Stars","","They are the key","","Stars provide major points","but only if you pick them up unobserved"	],
 		sprite:{		name:"ents.png",		idx:4	}
 },
 {
@@ -223,8 +307,6 @@ this.clickZones=[
 			i-=2;
 			
 			game.screens.chooser.selected = i;
-			
-			console.log(i,this.selected);
 		
 		}},
 		{x:360,y:600,w:60,h:30,click:function(){
@@ -256,14 +338,14 @@ this.reset = function(from, to){
 }
 this.selected = null;
 this.items = [
-	{name:"banana",text:["The Banana","The hunble banana","mm.mmm.mmm..mm?","Avoid casual encounters"],"sprite":{"name":"banana.png","idx":0}},
-	{name:"fan",text:["The Fan","Hide Your Stars.","Makes stars score more"],"sprite":{"name":"fan.png","idx":0}},
-	{name:"headphones",text:["The Headphones","Avoid eye contact","Awkwardness range reduced"],"sprite":{"name":"headphones.png","idx":0}},
+	{name:"banana",text:["The Banana","","","The hunble banana","mm.mmm.mmm..mm?","Avoid casual encounters"],"sprite":{"name":"banana.png","idx":0}},
+	{name:"fan",text:["The Fan","","","Hide Your Stars.","Makes stars score more","even if you are seen"],"sprite":{"name":"fan.png","idx":0}},
+	{name:"headphones",text:["","","The Headphones","Avoid eye contact","Awkwardness range reduced"],"sprite":{"name":"headphones.png","idx":0}},
 	{},
-	{name:"band",text:["Funny Hats","I play bassoon?","Get ignored By the band"],"sprite":{"name":"band.png","idx":0}},
-	{name:"cheer",text:["School Spirit","Give me a U! Gold.","Cheerleaders leave you alone."],"sprite":{"name":"cheer.png","idx":0}},
-	{name:"grease",text:["Look the part","Eehhhhh?","Pal up with the Greaers"],"sprite":{"name":"grease.png","idx":0}},
-	{name:"prep",text:["Pop that Collar","Bro? Bro.","Preps overlook you"],"sprite":{"name":"prep.png","idx":0}},
+	{name:"band",text:["","","Funny Hats","I play bassoon?","Get ignored By the band"],"sprite":{"name":"band.png","idx":0}},
+	{name:"cheer",text:["","","School Spirit","Give me a U! Gold.","Cheerleaders leave you alone."],"sprite":{"name":"cheer.png","idx":0}},
+	{name:"grease",text:["","","Look the part","Eehhhhh?","Pal up with the Greaers"],"sprite":{"name":"grease.png","idx":0}},
+	{name:"prep",text:["","","Pop that Collar","Bro? Bro.","Preps overlook you"],"sprite":{"name":"prep.png","idx":0}},
 	
 
 ];
