@@ -36,9 +36,9 @@ var game ={
 		
 	},
 	progress:{
-		"mall":false,
-		"forest":false,
-		"stadium":false
+		"mall":0,
+		"forest":0,
+		"stadium":0
 	},
 	
 	hearts:5,
@@ -202,7 +202,7 @@ var game ={
 		{"sprite":"tiles.png","size":[32,32],"keys":{},"frames":1},
 		{"sprite":"ents.png","size":[32,32],"keys":{},"frames":4},
 		{"sprite":"hearts.png","size":[64,64],"keys":{"full":0,"empty":1},"frames":4},
-		{"sprite":"star.png","size":[64,64],"keys":{"empty":0,"full":1},"frames":1},
+		{"sprite":"prep.png","size":[64,64],"keys":{"used":0,"active":0},"frames":1},
 		{"sprite":"banana.png","size":[64,64],"keys":{"used":0,"active":1},"frames":4},
 		{"sprite":"band.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},
 		{"sprite":"cheer.png","size":[64,64],"keys":{"used":0,"active":0},"frames":4},

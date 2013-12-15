@@ -12,7 +12,7 @@ game.screens.menu = function(){
 			var button = Math.floor((diesel.mouseY - 32 )/ 32);
 			switch(button){
 				case 0:
-					diesel.raiseEvent("screenChange","menu","level");
+					diesel.raiseEvent("screenChange","menu","level","gameIntro");
 				break;
 				case 1:
 					//TODO load __current
@@ -192,11 +192,39 @@ Game INTRO
 */
 game.screens.gameIntro = function(){
 
-//TODO.
-/*
-Use the duke nukem intro as a basis.
-anyway to get amusing random data from somewhere?
-*/
+this.clickZones=[
+		{x:0,y:0,w:game.width,h:game.height,"click":function(){
+		diesel.raiseEvent("screenChange","level", this.to, null);
+			}
+		}
+
+	]
+
+this.reset = function(from, to){
+	this.to= to;
+	game.context.vfx.clearRect(0,0,800,800);
+	game.context.vfx.fillStyle="rgba(255,255,255, 0.5)";
+	this.i = 0;
+}
+
+this.i=0;
+this.screen =0;
+this.grid =60;
+this.to;
+
+this.screentime = 3000;
+
+this.draw =function(){
+	//TODO DRAW AN INTO instead of a descdning line.
+	game.context.vfx.fillRect(0,this.grid*i,game.width,this.grid);
+}
+this.update= function(ticks){
+	i++;
+	if(i *this.grid >game.height){
+		diesel.raiseEvent("screenChange","level", this.to, null);
+	}
+}
+
 
 }
 game.screens.gameIntro.prototype = game.screens.base;

@@ -265,3 +265,72 @@ this.update= function(ticks, id){
 }
 game.objects.units.grease.prototype = new game.objects.units.base();
 
+
+
+
+game.objects.units.prep = function(x,y){
+this.x  = x;
+this.y =y;
+this.w = game.screens.level.grid*.9;
+this.h = game.screens.level.grid*.9;
+this.sprite = new diesel.spriteInstance(diesel.spriteCache["prep.png"]);
+this.sprite.animation = 0;
+this.facing="down"
+this.maxSpeed = game.screens.level.grid;
+
+this.draw =function(context){
+		context.save();
+			context.translate(this.x,this.y);
+
+			
+				if(this.facing == "left"){
+					context.translate(this.w/2,this.h/-2);
+					context.scale(-1,1);
+					this.sprite.draw(context,this.w,this.h);
+					context.scale(-1,1);
+				}
+				else{
+					context.translate(this.w/-2,this.h/-2);
+					this.sprite.draw(context,this.w,this.h);
+				}
+			
+		context.restore();
+		
+		if(diesel.frameCount% 10 ==0){
+			this.sprite.nextFrame();
+		}
+	}
+this.update= function(ticks, id){
+		if( id!= undefined){
+			this.id = id;
+		}
+		//move in a direction
+		if(this.canMove(ticks, game[this.facing], this.hspeed)){// &&) !(this.avoidEdges && this.willFall)){
+			this.move(ticks, game[this.facing], this.hspeed)
+		}
+		else{
+			if(this.facing == "up"){
+				this.facing = "right";
+			}
+			else{
+				if(this.facing =="right"){
+					this.facing ="down";
+				}
+				else{
+					if(this.facing =="down"){
+					 this.facing = "left"
+					}
+					else{
+						this.facing ="up";
+					}
+				}
+			}
+
+		}	
+
+	};
+
+}
+game.objects.units.prep.prototype = new game.objects.units.base();
+
+
