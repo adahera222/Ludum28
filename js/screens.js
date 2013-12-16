@@ -15,21 +15,19 @@ game.screens.menu = function(){
 		}},
 
 	]
-	this.options = [
-		"click to start",
-		
-		"","",
-		"this game requires a keyboard. sorry"
-
-	];
+	
 	this.draw=function(){
 		this.clearAllContexts();
 		game.context.main.fillStyle="#333333";
 		game.context.vfx.fillStyle="#333333";
-		game.context.main.fillText("MENU:",16,32);
-		this.drawMenu(game.context.main, this.options, 32,32, 200,128,32);
 
-		this.fillTextCenteredX(game.context.vfx,game.version,game.width/2,420);
+		this.fillTextCenteredX(game.context.vfx,"the 1ONEliest number",game.width/2,72);
+		this.fillTextCenteredX(game.context.vfx,"click to start",game.width/2,120);
+
+		this.fillTextCenteredX(game.context.vfx,"this game requires a keyboard",game.width/2,240);
+				this.fillTextCenteredX(game.context.vfx,"for the arrow keys",game.width/2,280);						
+		this.fillTextCenteredX(game.context.vfx,"sorry",game.width/2,320);
+		this.fillTextCenteredX(game.context.vfx,game.version,game.width/2,520);
 
 	};
 ;
