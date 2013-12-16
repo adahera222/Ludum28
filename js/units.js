@@ -100,8 +100,9 @@ this.update= function(ticks){
 			}
 		}
 		if(alone && (diesel.frameCount%5 ==0)){
-			game.score++;
+			game.score++;	
 		}
+		
 	}
 	
 	//world ents
